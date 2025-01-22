@@ -1,0 +1,2147 @@
+Logging to ./results
+-------------------------------------
+| mse_label_cond_mean    | 0.162    |
+| mse_label_cond_q1_mean | 0.0722   |
+| mse_label_cond_q2_mean | 0.236    |
+| mse_label_cond_q3_mean | 0.11     |
+| mse_loss_mean          | 0.28     |
+| mse_loss_q1_mean       | 0.171    |
+| mse_loss_q2_mean       | 0.357    |
+| mse_loss_q3_mean       | 0.252    |
+| samples                | 11       |
+| step                   | 10       |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0258   |
+| mse_label_cond_q0_mean | 0.0224   |
+| mse_label_cond_q1_mean | 0.0228   |
+| mse_label_cond_q2_mean | 0.0106   |
+| mse_label_cond_q3_mean | 0.051    |
+| mse_loss_mean          | 0.0581   |
+| mse_loss_q0_mean       | 0.0501   |
+| mse_loss_q1_mean       | 0.0476   |
+| mse_loss_q2_mean       | 0.0511   |
+| mse_loss_q3_mean       | 0.0916   |
+| samples                | 21       |
+| step                   | 20       |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0116   |
+| mse_label_cond_q0_mean | 0.015    |
+| mse_label_cond_q1_mean | 0.00895  |
+| mse_label_cond_q2_mean | 0.0129   |
+| mse_label_cond_q3_mean | 0.0106   |
+| mse_loss_mean          | 0.0308   |
+| mse_loss_q0_mean       | 0.0298   |
+| mse_loss_q1_mean       | 0.0241   |
+| mse_loss_q2_mean       | 0.032    |
+| mse_loss_q3_mean       | 0.0341   |
+| samples                | 31       |
+| step                   | 30       |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00759  |
+| mse_label_cond_q0_mean | 0.00622  |
+| mse_label_cond_q1_mean | 0.00647  |
+| mse_label_cond_q2_mean | 0.00555  |
+| mse_label_cond_q3_mean | 0.00968  |
+| mse_loss_mean          | 0.0202   |
+| mse_loss_q0_mean       | 0.0197   |
+| mse_loss_q1_mean       | 0.0147   |
+| mse_loss_q2_mean       | 0.0169   |
+| mse_loss_q3_mean       | 0.0242   |
+| samples                | 41       |
+| step                   | 40       |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00554  |
+| mse_label_cond_q0_mean | 0.00246  |
+| mse_label_cond_q1_mean | 0.00655  |
+| mse_label_cond_q2_mean | 0.00614  |
+| mse_label_cond_q3_mean | 0.00827  |
+| mse_loss_mean          | 0.0133   |
+| mse_loss_q0_mean       | 0.00873  |
+| mse_loss_q1_mean       | 0.0124   |
+| mse_loss_q2_mean       | 0.0154   |
+| mse_loss_q3_mean       | 0.018    |
+| samples                | 51       |
+| step                   | 50       |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00593  |
+| mse_label_cond_q0_mean | 0.0102   |
+| mse_label_cond_q1_mean | 0.00454  |
+| mse_label_cond_q2_mean | 0.00453  |
+| mse_label_cond_q3_mean | 0.00867  |
+| mse_loss_mean          | 0.0131   |
+| mse_loss_q0_mean       | 0.0174   |
+| mse_loss_q1_mean       | 0.0103   |
+| mse_loss_q2_mean       | 0.0118   |
+| mse_loss_q3_mean       | 0.0179   |
+| samples                | 61       |
+| step                   | 60       |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00744  |
+| mse_label_cond_q0_mean | 0.00412  |
+| mse_label_cond_q1_mean | 0.00699  |
+| mse_label_cond_q2_mean | 0.00793  |
+| mse_label_cond_q3_mean | 0.00908  |
+| mse_loss_mean          | 0.0179   |
+| mse_loss_q0_mean       | 0.00989  |
+| mse_loss_q1_mean       | 0.0145   |
+| mse_loss_q2_mean       | 0.0185   |
+| mse_loss_q3_mean       | 0.0232   |
+| samples                | 71       |
+| step                   | 70       |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00407  |
+| mse_label_cond_q0_mean | 0.0043   |
+| mse_label_cond_q1_mean | 0.00408  |
+| mse_label_cond_q3_mean | 0.00399  |
+| mse_loss_mean          | 0.0169   |
+| mse_loss_q0_mean       | 0.0247   |
+| mse_loss_q1_mean       | 0.0143   |
+| mse_loss_q3_mean       | 0.0195   |
+| samples                | 81       |
+| step                   | 80       |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0051   |
+| mse_label_cond_q0_mean | 0.00469  |
+| mse_label_cond_q2_mean | 0.0055   |
+| mse_label_cond_q3_mean | 0.00556  |
+| mse_loss_mean          | 0.0119   |
+| mse_loss_q0_mean       | 0.0102   |
+| mse_loss_q2_mean       | 0.0122   |
+| mse_loss_q3_mean       | 0.0159   |
+| samples                | 91       |
+| step                   | 90       |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0056   |
+| mse_label_cond_q0_mean | 0.00481  |
+| mse_label_cond_q1_mean | 0.00488  |
+| mse_label_cond_q2_mean | 0.0123   |
+| mse_loss_mean          | 0.0113   |
+| mse_loss_q0_mean       | 0.00854  |
+| mse_loss_q1_mean       | 0.0109   |
+| mse_loss_q2_mean       | 0.0242   |
+| samples                | 101      |
+| step                   | 100      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00391  |
+| mse_label_cond_q0_mean | 0.00199  |
+| mse_label_cond_q1_mean | 0.00441  |
+| mse_label_cond_q2_mean | 0.00433  |
+| mse_loss_mean          | 0.0108   |
+| mse_loss_q0_mean       | 0.00807  |
+| mse_loss_q1_mean       | 0.0116   |
+| mse_loss_q2_mean       | 0.0109   |
+| samples                | 111      |
+| step                   | 110      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00328  |
+| mse_label_cond_q0_mean | 0.00225  |
+| mse_label_cond_q1_mean | 0.00233  |
+| mse_label_cond_q2_mean | 0.00476  |
+| mse_label_cond_q3_mean | 0.00483  |
+| mse_loss_mean          | 0.00871  |
+| mse_loss_q0_mean       | 0.00563  |
+| mse_loss_q1_mean       | 0.00942  |
+| mse_loss_q2_mean       | 0.00792  |
+| mse_loss_q3_mean       | 0.0182   |
+| samples                | 121      |
+| step                   | 120      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00407  |
+| mse_label_cond_q0_mean | 0.00168  |
+| mse_label_cond_q1_mean | 0.00178  |
+| mse_label_cond_q3_mean | 0.00565  |
+| mse_loss_mean          | 0.0119   |
+| mse_loss_q0_mean       | 0.00714  |
+| mse_loss_q1_mean       | 0.00979  |
+| mse_loss_q3_mean       | 0.0147   |
+| samples                | 131      |
+| step                   | 130      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0047   |
+| mse_label_cond_q0_mean | 0.00348  |
+| mse_label_cond_q1_mean | 0.00336  |
+| mse_label_cond_q2_mean | 0.00629  |
+| mse_label_cond_q3_mean | 0.00578  |
+| mse_loss_mean          | 0.0109   |
+| mse_loss_q0_mean       | 0.0082   |
+| mse_loss_q1_mean       | 0.00904  |
+| mse_loss_q2_mean       | 0.00966  |
+| mse_loss_q3_mean       | 0.0152   |
+| samples                | 141      |
+| step                   | 140      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00405  |
+| mse_label_cond_q0_mean | 0.00348  |
+| mse_label_cond_q1_mean | 0.00433  |
+| mse_label_cond_q2_mean | 0.00368  |
+| mse_label_cond_q3_mean | 0.0054   |
+| mse_loss_mean          | 0.00872  |
+| mse_loss_q0_mean       | 0.0065   |
+| mse_loss_q1_mean       | 0.00776  |
+| mse_loss_q2_mean       | 0.00781  |
+| mse_loss_q3_mean       | 0.0137   |
+| samples                | 151      |
+| step                   | 150      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00356  |
+| mse_label_cond_q0_mean | 0.00295  |
+| mse_label_cond_q1_mean | 0.00309  |
+| mse_label_cond_q3_mean | 0.00485  |
+| mse_loss_mean          | 0.00918  |
+| mse_loss_q0_mean       | 0.00696  |
+| mse_loss_q1_mean       | 0.00652  |
+| mse_loss_q3_mean       | 0.0148   |
+| samples                | 161      |
+| step                   | 160      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00378  |
+| mse_label_cond_q0_mean | 0.00278  |
+| mse_label_cond_q2_mean | 0.00528  |
+| mse_label_cond_q3_mean | 0.00405  |
+| mse_loss_mean          | 0.00816  |
+| mse_loss_q0_mean       | 0.00567  |
+| mse_loss_q2_mean       | 0.0103   |
+| mse_loss_q3_mean       | 0.0112   |
+| samples                | 171      |
+| step                   | 170      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00332  |
+| mse_label_cond_q0_mean | 0.00294  |
+| mse_label_cond_q1_mean | 0.00368  |
+| mse_label_cond_q2_mean | 0.00337  |
+| mse_label_cond_q3_mean | 0.00359  |
+| mse_loss_mean          | 0.0096   |
+| mse_loss_q0_mean       | 0.00949  |
+| mse_loss_q1_mean       | 0.00855  |
+| mse_loss_q2_mean       | 0.00818  |
+| mse_loss_q3_mean       | 0.0103   |
+| samples                | 181      |
+| step                   | 180      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00399  |
+| mse_label_cond_q0_mean | 0.00285  |
+| mse_label_cond_q2_mean | 0.0045   |
+| mse_label_cond_q3_mean | 0.00688  |
+| mse_loss_mean          | 0.0103   |
+| mse_loss_q0_mean       | 0.00792  |
+| mse_loss_q2_mean       | 0.00858  |
+| mse_loss_q3_mean       | 0.0193   |
+| samples                | 191      |
+| step                   | 190      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00421  |
+| mse_label_cond_q0_mean | 0.00362  |
+| mse_label_cond_q1_mean | 0.00449  |
+| mse_label_cond_q2_mean | 0.00467  |
+| mse_label_cond_q3_mean | 0.00366  |
+| mse_loss_mean          | 0.00869  |
+| mse_loss_q0_mean       | 0.00589  |
+| mse_loss_q1_mean       | 0.00954  |
+| mse_loss_q2_mean       | 0.0102   |
+| mse_loss_q3_mean       | 0.008    |
+| samples                | 201      |
+| step                   | 200      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0047   |
+| mse_label_cond_q0_mean | 0.00312  |
+| mse_label_cond_q1_mean | 0.00432  |
+| mse_label_cond_q2_mean | 0.00493  |
+| mse_label_cond_q3_mean | 0.00805  |
+| mse_loss_mean          | 0.0102   |
+| mse_loss_q0_mean       | 0.0112   |
+| mse_loss_q1_mean       | 0.0105   |
+| mse_loss_q2_mean       | 0.00858  |
+| mse_loss_q3_mean       | 0.0137   |
+| samples                | 211      |
+| step                   | 210      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00367  |
+| mse_label_cond_q1_mean | 0.00442  |
+| mse_label_cond_q2_mean | 0.00399  |
+| mse_label_cond_q3_mean | 0.00265  |
+| mse_loss_mean          | 0.00831  |
+| mse_loss_q1_mean       | 0.00791  |
+| mse_loss_q2_mean       | 0.00769  |
+| mse_loss_q3_mean       | 0.00959  |
+| samples                | 221      |
+| step                   | 220      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00312  |
+| mse_label_cond_q0_mean | 0.00266  |
+| mse_label_cond_q1_mean | 0.00293  |
+| mse_label_cond_q2_mean | 0.00242  |
+| mse_label_cond_q3_mean | 0.00372  |
+| mse_loss_mean          | 0.00937  |
+| mse_loss_q0_mean       | 0.00658  |
+| mse_loss_q1_mean       | 0.00676  |
+| mse_loss_q2_mean       | 0.0108   |
+| mse_loss_q3_mean       | 0.0113   |
+| samples                | 231      |
+| step                   | 230      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00293  |
+| mse_label_cond_q0_mean | 0.00469  |
+| mse_label_cond_q1_mean | 0.0021   |
+| mse_label_cond_q2_mean | 0.00183  |
+| mse_label_cond_q3_mean | 0.00426  |
+| mse_loss_mean          | 0.00821  |
+| mse_loss_q0_mean       | 0.00807  |
+| mse_loss_q1_mean       | 0.0053   |
+| mse_loss_q2_mean       | 0.00744  |
+| mse_loss_q3_mean       | 0.0119   |
+| samples                | 241      |
+| step                   | 240      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00368  |
+| mse_label_cond_q0_mean | 0.00126  |
+| mse_label_cond_q1_mean | 0.00406  |
+| mse_label_cond_q2_mean | 0.00374  |
+| mse_label_cond_q3_mean | 0.00449  |
+| mse_loss_mean          | 0.0085   |
+| mse_loss_q0_mean       | 0.00507  |
+| mse_loss_q1_mean       | 0.00632  |
+| mse_loss_q2_mean       | 0.00633  |
+| mse_loss_q3_mean       | 0.0112   |
+| samples                | 251      |
+| step                   | 250      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00538  |
+| mse_label_cond_q0_mean | 0.00611  |
+| mse_label_cond_q1_mean | 0.00222  |
+| mse_label_cond_q2_mean | 0.00577  |
+| mse_label_cond_q3_mean | 0.00673  |
+| mse_loss_mean          | 0.00993  |
+| mse_loss_q0_mean       | 0.0091   |
+| mse_loss_q1_mean       | 0.00562  |
+| mse_loss_q2_mean       | 0.0103   |
+| mse_loss_q3_mean       | 0.0125   |
+| samples                | 261      |
+| step                   | 260      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00401  |
+| mse_label_cond_q0_mean | 0.0038   |
+| mse_label_cond_q1_mean | 0.00475  |
+| mse_label_cond_q2_mean | 0.00384  |
+| mse_label_cond_q3_mean | 0.00288  |
+| mse_loss_mean          | 0.00954  |
+| mse_loss_q0_mean       | 0.00733  |
+| mse_loss_q1_mean       | 0.00735  |
+| mse_loss_q2_mean       | 0.012    |
+| mse_loss_q3_mean       | 0.0105   |
+| samples                | 271      |
+| step                   | 270      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0032   |
+| mse_label_cond_q0_mean | 0.00223  |
+| mse_label_cond_q1_mean | 0.00275  |
+| mse_label_cond_q3_mean | 0.00385  |
+| mse_loss_mean          | 0.00915  |
+| mse_loss_q0_mean       | 0.00562  |
+| mse_loss_q1_mean       | 0.00606  |
+| mse_loss_q3_mean       | 0.0124   |
+| samples                | 281      |
+| step                   | 280      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00252  |
+| mse_label_cond_q0_mean | 0.00189  |
+| mse_label_cond_q1_mean | 0.00299  |
+| mse_label_cond_q2_mean | 0.00378  |
+| mse_label_cond_q3_mean | 0.00411  |
+| mse_loss_mean          | 0.00608  |
+| mse_loss_q0_mean       | 0.00548  |
+| mse_loss_q1_mean       | 0.00617  |
+| mse_loss_q2_mean       | 0.00679  |
+| mse_loss_q3_mean       | 0.0088   |
+| samples                | 291      |
+| step                   | 290      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00311  |
+| mse_label_cond_q0_mean | 0.00199  |
+| mse_label_cond_q1_mean | 0.00379  |
+| mse_label_cond_q2_mean | 0.00126  |
+| mse_label_cond_q3_mean | 0.00319  |
+| mse_loss_mean          | 0.00963  |
+| mse_loss_q0_mean       | 0.0122   |
+| mse_loss_q1_mean       | 0.00794  |
+| mse_loss_q2_mean       | 0.00491  |
+| mse_loss_q3_mean       | 0.0119   |
+| samples                | 301      |
+| step                   | 300      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0027   |
+| mse_label_cond_q0_mean | 0.00217  |
+| mse_label_cond_q1_mean | 0.00398  |
+| mse_label_cond_q2_mean | 0.00266  |
+| mse_label_cond_q3_mean | 0.00425  |
+| mse_loss_mean          | 0.00655  |
+| mse_loss_q0_mean       | 0.00559  |
+| mse_loss_q1_mean       | 0.00701  |
+| mse_loss_q2_mean       | 0.00664  |
+| mse_loss_q3_mean       | 0.0107   |
+| samples                | 311      |
+| step                   | 310      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00261  |
+| mse_label_cond_q0_mean | 0.00279  |
+| mse_label_cond_q1_mean | 0.00185  |
+| mse_label_cond_q2_mean | 0.00216  |
+| mse_label_cond_q3_mean | 0.00359  |
+| mse_loss_mean          | 0.00598  |
+| mse_loss_q0_mean       | 0.00453  |
+| mse_loss_q1_mean       | 0.00679  |
+| mse_loss_q2_mean       | 0.00538  |
+| mse_loss_q3_mean       | 0.00795  |
+| samples                | 321      |
+| step                   | 320      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00319  |
+| mse_label_cond_q1_mean | 0.00311  |
+| mse_label_cond_q2_mean | 0.00329  |
+| mse_label_cond_q3_mean | 0.0032   |
+| mse_loss_mean          | 0.00731  |
+| mse_loss_q1_mean       | 0.00638  |
+| mse_loss_q2_mean       | 0.00602  |
+| mse_loss_q3_mean       | 0.00984  |
+| samples                | 331      |
+| step                   | 330      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00277  |
+| mse_label_cond_q0_mean | 0.00172  |
+| mse_label_cond_q1_mean | 0.003    |
+| mse_label_cond_q2_mean | 0.00258  |
+| mse_label_cond_q3_mean | 0.00448  |
+| mse_loss_mean          | 0.00557  |
+| mse_loss_q0_mean       | 0.00445  |
+| mse_loss_q1_mean       | 0.00507  |
+| mse_loss_q2_mean       | 0.00606  |
+| mse_loss_q3_mean       | 0.0083   |
+| samples                | 341      |
+| step                   | 340      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00252  |
+| mse_label_cond_q0_mean | 0.00135  |
+| mse_label_cond_q1_mean | 0.0025   |
+| mse_label_cond_q2_mean | 0.00312  |
+| mse_label_cond_q3_mean | 0.00303  |
+| mse_loss_mean          | 0.0052   |
+| mse_loss_q0_mean       | 0.00394  |
+| mse_loss_q1_mean       | 0.00445  |
+| mse_loss_q2_mean       | 0.006    |
+| mse_loss_q3_mean       | 0.00572  |
+| samples                | 351      |
+| step                   | 350      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00291  |
+| mse_label_cond_q0_mean | 0.00148  |
+| mse_label_cond_q2_mean | 0.00294  |
+| mse_label_cond_q3_mean | 0.00375  |
+| mse_loss_mean          | 0.0077   |
+| mse_loss_q0_mean       | 0.00445  |
+| mse_loss_q2_mean       | 0.00653  |
+| mse_loss_q3_mean       | 0.0101   |
+| samples                | 361      |
+| step                   | 360      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00302  |
+| mse_label_cond_q0_mean | 0.00419  |
+| mse_label_cond_q1_mean | 0.00174  |
+| mse_label_cond_q2_mean | 0.0031   |
+| mse_loss_mean          | 0.00814  |
+| mse_loss_q0_mean       | 0.00777  |
+| mse_loss_q1_mean       | 0.00669  |
+| mse_loss_q2_mean       | 0.0095   |
+| samples                | 371      |
+| step                   | 370      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00238  |
+| mse_label_cond_q0_mean | 0.00267  |
+| mse_label_cond_q1_mean | 0.00121  |
+| mse_label_cond_q3_mean | 0.00268  |
+| mse_loss_mean          | 0.00744  |
+| mse_loss_q0_mean       | 0.00657  |
+| mse_loss_q1_mean       | 0.00657  |
+| mse_loss_q3_mean       | 0.00945  |
+| samples                | 381      |
+| step                   | 380      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00267  |
+| mse_label_cond_q0_mean | 0.00243  |
+| mse_label_cond_q1_mean | 0.00285  |
+| mse_label_cond_q2_mean | 0.00273  |
+| mse_label_cond_q3_mean | 0.00294  |
+| mse_loss_mean          | 0.00725  |
+| mse_loss_q0_mean       | 0.00473  |
+| mse_loss_q1_mean       | 0.00649  |
+| mse_loss_q2_mean       | 0.00724  |
+| mse_loss_q3_mean       | 0.0127   |
+| samples                | 391      |
+| step                   | 390      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00241  |
+| mse_label_cond_q0_mean | 0.00147  |
+| mse_label_cond_q1_mean | 0.00195  |
+| mse_label_cond_q2_mean | 0.00182  |
+| mse_label_cond_q3_mean | 0.00478  |
+| mse_loss_mean          | 0.00614  |
+| mse_loss_q0_mean       | 0.00486  |
+| mse_loss_q1_mean       | 0.00481  |
+| mse_loss_q2_mean       | 0.00684  |
+| mse_loss_q3_mean       | 0.0104   |
+| samples                | 401      |
+| step                   | 400      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00388  |
+| mse_label_cond_q0_mean | 0.00286  |
+| mse_label_cond_q1_mean | 0.00702  |
+| mse_label_cond_q2_mean | 0.00351  |
+| mse_label_cond_q3_mean | 0.00401  |
+| mse_loss_mean          | 0.0086   |
+| mse_loss_q0_mean       | 0.00486  |
+| mse_loss_q1_mean       | 0.0109   |
+| mse_loss_q2_mean       | 0.00894  |
+| mse_loss_q3_mean       | 0.00986  |
+| samples                | 411      |
+| step                   | 410      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00261  |
+| mse_label_cond_q0_mean | 0.00189  |
+| mse_label_cond_q1_mean | 0.00128  |
+| mse_label_cond_q3_mean | 0.00384  |
+| mse_loss_mean          | 0.00763  |
+| mse_loss_q0_mean       | 0.00561  |
+| mse_loss_q1_mean       | 0.00439  |
+| mse_loss_q3_mean       | 0.011    |
+| samples                | 421      |
+| step                   | 420      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0032   |
+| mse_label_cond_q0_mean | 0.00291  |
+| mse_label_cond_q1_mean | 0.00327  |
+| mse_label_cond_q2_mean | 0.00405  |
+| mse_label_cond_q3_mean | 0.00299  |
+| mse_loss_mean          | 0.00919  |
+| mse_loss_q0_mean       | 0.00669  |
+| mse_loss_q1_mean       | 0.00807  |
+| mse_loss_q2_mean       | 0.00773  |
+| mse_loss_q3_mean       | 0.0113   |
+| samples                | 431      |
+| step                   | 430      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00334  |
+| mse_label_cond_q0_mean | 0.00235  |
+| mse_label_cond_q1_mean | 0.00249  |
+| mse_label_cond_q2_mean | 0.00433  |
+| mse_label_cond_q3_mean | 0.00429  |
+| mse_loss_mean          | 0.00757  |
+| mse_loss_q0_mean       | 0.00556  |
+| mse_loss_q1_mean       | 0.00417  |
+| mse_loss_q2_mean       | 0.00831  |
+| mse_loss_q3_mean       | 0.0109   |
+| samples                | 441      |
+| step                   | 440      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00278  |
+| mse_label_cond_q0_mean | 0.00119  |
+| mse_label_cond_q1_mean | 0.0026   |
+| mse_label_cond_q2_mean | 0.00252  |
+| mse_label_cond_q3_mean | 0.00377  |
+| mse_loss_mean          | 0.00609  |
+| mse_loss_q0_mean       | 0.00471  |
+| mse_loss_q1_mean       | 0.0046   |
+| mse_loss_q2_mean       | 0.00589  |
+| mse_loss_q3_mean       | 0.0078   |
+| samples                | 451      |
+| step                   | 450      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00302  |
+| mse_label_cond_q0_mean | 0.00264  |
+| mse_label_cond_q2_mean | 0.00303  |
+| mse_label_cond_q3_mean | 0.00377  |
+| mse_loss_mean          | 0.00672  |
+| mse_loss_q0_mean       | 0.00633  |
+| mse_loss_q2_mean       | 0.00612  |
+| mse_loss_q3_mean       | 0.00871  |
+| samples                | 461      |
+| step                   | 460      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00321  |
+| mse_label_cond_q0_mean | 0.00218  |
+| mse_label_cond_q1_mean | 0.00498  |
+| mse_label_cond_q2_mean | 0.00143  |
+| mse_label_cond_q3_mean | 0.00372  |
+| mse_loss_mean          | 0.007    |
+| mse_loss_q0_mean       | 0.004    |
+| mse_loss_q1_mean       | 0.00995  |
+| mse_loss_q2_mean       | 0.00507  |
+| mse_loss_q3_mean       | 0.008    |
+| samples                | 471      |
+| step                   | 470      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00288  |
+| mse_label_cond_q0_mean | 0.00335  |
+| mse_label_cond_q1_mean | 0.00163  |
+| mse_label_cond_q2_mean | 0.00332  |
+| mse_label_cond_q3_mean | 0.00382  |
+| mse_loss_mean          | 0.00586  |
+| mse_loss_q0_mean       | 0.00601  |
+| mse_loss_q1_mean       | 0.00447  |
+| mse_loss_q2_mean       | 0.00675  |
+| mse_loss_q3_mean       | 0.00763  |
+| samples                | 481      |
+| step                   | 480      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00275  |
+| mse_label_cond_q1_mean | 0.0026   |
+| mse_label_cond_q2_mean | 0.00342  |
+| mse_label_cond_q3_mean | 0.00257  |
+| mse_loss_mean          | 0.00671  |
+| mse_loss_q1_mean       | 0.0059   |
+| mse_loss_q2_mean       | 0.00597  |
+| mse_loss_q3_mean       | 0.00789  |
+| samples                | 491      |
+| step                   | 490      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00239  |
+| mse_label_cond_q0_mean | 0.00204  |
+| mse_label_cond_q1_mean | 0.00259  |
+| mse_label_cond_q2_mean | 0.00267  |
+| mse_label_cond_q3_mean | 0.00266  |
+| mse_loss_mean          | 0.00601  |
+| mse_loss_q0_mean       | 0.00382  |
+| mse_loss_q1_mean       | 0.00732  |
+| mse_loss_q2_mean       | 0.00486  |
+| mse_loss_q3_mean       | 0.009    |
+| samples                | 501      |
+| step                   | 500      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00412  |
+| mse_label_cond_q0_mean | 0.00208  |
+| mse_label_cond_q1_mean | 0.00102  |
+| mse_label_cond_q2_mean | 0.0044   |
+| mse_label_cond_q3_mean | 0.00545  |
+| mse_loss_mean          | 0.00901  |
+| mse_loss_q0_mean       | 0.00453  |
+| mse_loss_q1_mean       | 0.00382  |
+| mse_loss_q2_mean       | 0.00938  |
+| mse_loss_q3_mean       | 0.0117   |
+| samples                | 511      |
+| step                   | 510      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00361  |
+| mse_label_cond_q0_mean | 0.00268  |
+| mse_label_cond_q1_mean | 0.00385  |
+| mse_label_cond_q2_mean | 0.00345  |
+| mse_label_cond_q3_mean | 0.00421  |
+| mse_loss_mean          | 0.00818  |
+| mse_loss_q0_mean       | 0.00426  |
+| mse_loss_q1_mean       | 0.00662  |
+| mse_loss_q2_mean       | 0.00868  |
+| mse_loss_q3_mean       | 0.0114   |
+| samples                | 521      |
+| step                   | 520      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00286  |
+| mse_label_cond_q0_mean | 0.00197  |
+| mse_label_cond_q1_mean | 0.00278  |
+| mse_label_cond_q2_mean | 0.00242  |
+| mse_label_cond_q3_mean | 0.00333  |
+| mse_loss_mean          | 0.00877  |
+| mse_loss_q0_mean       | 0.00464  |
+| mse_loss_q1_mean       | 0.00841  |
+| mse_loss_q2_mean       | 0.00643  |
+| mse_loss_q3_mean       | 0.0111   |
+| samples                | 531      |
+| step                   | 530      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00307  |
+| mse_label_cond_q0_mean | 0.00067  |
+| mse_label_cond_q1_mean | 0.00303  |
+| mse_label_cond_q2_mean | 0.00527  |
+| mse_label_cond_q3_mean | 0.00264  |
+| mse_loss_mean          | 0.00827  |
+| mse_loss_q0_mean       | 0.00368  |
+| mse_loss_q1_mean       | 0.00904  |
+| mse_loss_q2_mean       | 0.0101   |
+| mse_loss_q3_mean       | 0.00897  |
+| samples                | 541      |
+| step                   | 540      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0022   |
+| mse_label_cond_q0_mean | 0.000723 |
+| mse_label_cond_q1_mean | 0.00194  |
+| mse_label_cond_q2_mean | 0.00249  |
+| mse_label_cond_q3_mean | 0.00335  |
+| mse_loss_mean          | 0.00639  |
+| mse_loss_q0_mean       | 0.00314  |
+| mse_loss_q1_mean       | 0.00697  |
+| mse_loss_q2_mean       | 0.00667  |
+| mse_loss_q3_mean       | 0.00847  |
+| samples                | 551      |
+| step                   | 550      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00316  |
+| mse_label_cond_q0_mean | 0.0018   |
+| mse_label_cond_q1_mean | 0.00471  |
+| mse_label_cond_q2_mean | 0.00325  |
+| mse_label_cond_q3_mean | 0.00352  |
+| mse_loss_mean          | 0.00762  |
+| mse_loss_q0_mean       | 0.00531  |
+| mse_loss_q1_mean       | 0.0104   |
+| mse_loss_q2_mean       | 0.00689  |
+| mse_loss_q3_mean       | 0.0085   |
+| samples                | 561      |
+| step                   | 560      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00352  |
+| mse_label_cond_q0_mean | 0.00201  |
+| mse_label_cond_q1_mean | 0.00383  |
+| mse_label_cond_q2_mean | 0.00254  |
+| mse_label_cond_q3_mean | 0.00445  |
+| mse_loss_mean          | 0.0078   |
+| mse_loss_q0_mean       | 0.00619  |
+| mse_loss_q1_mean       | 0.00657  |
+| mse_loss_q2_mean       | 0.00606  |
+| mse_loss_q3_mean       | 0.00939  |
+| samples                | 571      |
+| step                   | 570      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00233  |
+| mse_label_cond_q0_mean | 0.0022   |
+| mse_label_cond_q1_mean | 0.00229  |
+| mse_label_cond_q2_mean | 0.00147  |
+| mse_label_cond_q3_mean | 0.00303  |
+| mse_loss_mean          | 0.00611  |
+| mse_loss_q0_mean       | 0.00386  |
+| mse_loss_q1_mean       | 0.00496  |
+| mse_loss_q2_mean       | 0.00613  |
+| mse_loss_q3_mean       | 0.00873  |
+| samples                | 581      |
+| step                   | 580      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00299  |
+| mse_label_cond_q0_mean | 0.00179  |
+| mse_label_cond_q1_mean | 0.00214  |
+| mse_label_cond_q2_mean | 0.00408  |
+| mse_label_cond_q3_mean | 0.0035   |
+| mse_loss_mean          | 0.00538  |
+| mse_loss_q0_mean       | 0.00331  |
+| mse_loss_q1_mean       | 0.00437  |
+| mse_loss_q2_mean       | 0.00641  |
+| mse_loss_q3_mean       | 0.00837  |
+| samples                | 591      |
+| step                   | 590      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00231  |
+| mse_label_cond_q0_mean | 0.00258  |
+| mse_label_cond_q1_mean | 0.00232  |
+| mse_label_cond_q2_mean | 0.00217  |
+| mse_loss_mean          | 0.00569  |
+| mse_loss_q0_mean       | 0.00594  |
+| mse_loss_q1_mean       | 0.00489  |
+| mse_loss_q2_mean       | 0.00569  |
+| samples                | 601      |
+| step                   | 600      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00384  |
+| mse_label_cond_q1_mean | 0.00199  |
+| mse_label_cond_q2_mean | 0.0063   |
+| mse_label_cond_q3_mean | 0.00445  |
+| mse_loss_mean          | 0.0085   |
+| mse_loss_q1_mean       | 0.00551  |
+| mse_loss_q2_mean       | 0.0106   |
+| mse_loss_q3_mean       | 0.0105   |
+| samples                | 611      |
+| step                   | 610      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00305  |
+| mse_label_cond_q0_mean | 0.00179  |
+| mse_label_cond_q1_mean | 0.0013   |
+| mse_label_cond_q2_mean | 0.00451  |
+| mse_label_cond_q3_mean | 0.00343  |
+| mse_loss_mean          | 0.00942  |
+| mse_loss_q0_mean       | 0.00782  |
+| mse_loss_q1_mean       | 0.00733  |
+| mse_loss_q2_mean       | 0.0112   |
+| mse_loss_q3_mean       | 0.00997  |
+| samples                | 621      |
+| step                   | 620      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00248  |
+| mse_label_cond_q0_mean | 0.00203  |
+| mse_label_cond_q1_mean | 0.00282  |
+| mse_label_cond_q2_mean | 0.00286  |
+| mse_label_cond_q3_mean | 0.00242  |
+| mse_loss_mean          | 0.00637  |
+| mse_loss_q0_mean       | 0.00456  |
+| mse_loss_q1_mean       | 0.00619  |
+| mse_loss_q2_mean       | 0.00665  |
+| mse_loss_q3_mean       | 0.0131   |
+| samples                | 631      |
+| step                   | 630      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00281  |
+| mse_label_cond_q0_mean | 0.00159  |
+| mse_label_cond_q1_mean | 0.00427  |
+| mse_label_cond_q2_mean | 0.00368  |
+| mse_label_cond_q3_mean | 0.00187  |
+| mse_loss_mean          | 0.0055   |
+| mse_loss_q0_mean       | 0.00385  |
+| mse_loss_q1_mean       | 0.00635  |
+| mse_loss_q2_mean       | 0.00646  |
+| mse_loss_q3_mean       | 0.00571  |
+| samples                | 641      |
+| step                   | 640      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00172  |
+| mse_label_cond_q0_mean | 0.0012   |
+| mse_label_cond_q1_mean | 0.00189  |
+| mse_label_cond_q2_mean | 0.00156  |
+| mse_label_cond_q3_mean | 0.00404  |
+| mse_loss_mean          | 0.00444  |
+| mse_loss_q0_mean       | 0.00377  |
+| mse_loss_q1_mean       | 0.00431  |
+| mse_loss_q2_mean       | 0.00527  |
+| mse_loss_q3_mean       | 0.00735  |
+| samples                | 651      |
+| step                   | 650      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00251  |
+| mse_label_cond_q0_mean | 0.00137  |
+| mse_label_cond_q1_mean | 0.00317  |
+| mse_label_cond_q2_mean | 0.00142  |
+| mse_label_cond_q3_mean | 0.00456  |
+| mse_loss_mean          | 0.00576  |
+| mse_loss_q0_mean       | 0.00404  |
+| mse_loss_q1_mean       | 0.00428  |
+| mse_loss_q2_mean       | 0.00502  |
+| mse_loss_q3_mean       | 0.00902  |
+| samples                | 661      |
+| step                   | 660      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0023   |
+| mse_label_cond_q0_mean | 0.00181  |
+| mse_label_cond_q1_mean | 0.00267  |
+| mse_label_cond_q2_mean | 0.00251  |
+| mse_label_cond_q3_mean | 0.0022   |
+| mse_loss_mean          | 0.00511  |
+| mse_loss_q0_mean       | 0.00382  |
+| mse_loss_q1_mean       | 0.00516  |
+| mse_loss_q2_mean       | 0.0058   |
+| mse_loss_q3_mean       | 0.00611  |
+| samples                | 671      |
+| step                   | 670      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00303  |
+| mse_label_cond_q0_mean | 0.003    |
+| mse_label_cond_q1_mean | 0.00232  |
+| mse_label_cond_q2_mean | 0.00216  |
+| mse_label_cond_q3_mean | 0.00416  |
+| mse_loss_mean          | 0.00773  |
+| mse_loss_q0_mean       | 0.00513  |
+| mse_loss_q1_mean       | 0.00513  |
+| mse_loss_q2_mean       | 0.00664  |
+| mse_loss_q3_mean       | 0.0123   |
+| samples                | 681      |
+| step                   | 680      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00253  |
+| mse_label_cond_q0_mean | 0.00148  |
+| mse_label_cond_q1_mean | 0.00276  |
+| mse_label_cond_q2_mean | 0.0048   |
+| mse_loss_mean          | 0.00642  |
+| mse_loss_q0_mean       | 0.00346  |
+| mse_loss_q1_mean       | 0.00478  |
+| mse_loss_q2_mean       | 0.0163   |
+| samples                | 691      |
+| step                   | 690      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0302   |
+| mse_label_cond_q0_mean | 0.01     |
+| mse_label_cond_q2_mean | 0.00659  |
+| mse_label_cond_q3_mean | 0.0639   |
+| mse_loss_mean          | 0.13     |
+| mse_loss_q0_mean       | 0.0618   |
+| mse_loss_q2_mean       | 0.0256   |
+| mse_loss_q3_mean       | 0.27     |
+| samples                | 701      |
+| step                   | 700      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0395   |
+| mse_label_cond_q0_mean | 0.0187   |
+| mse_label_cond_q1_mean | 0.0324   |
+| mse_label_cond_q2_mean | 0.105    |
+| mse_label_cond_q3_mean | 0.0657   |
+| mse_loss_mean          | 0.156    |
+| mse_loss_q0_mean       | 0.169    |
+| mse_loss_q1_mean       | 0.0912   |
+| mse_loss_q2_mean       | 0.24     |
+| mse_loss_q3_mean       | 0.147    |
+| samples                | 711      |
+| step                   | 710      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0176   |
+| mse_label_cond_q0_mean | 0.0189   |
+| mse_label_cond_q1_mean | 0.019    |
+| mse_label_cond_q2_mean | 0.0179   |
+| mse_label_cond_q3_mean | 0.00836  |
+| mse_loss_mean          | 0.0416   |
+| mse_loss_q0_mean       | 0.0386   |
+| mse_loss_q1_mean       | 0.041    |
+| mse_loss_q2_mean       | 0.0468   |
+| mse_loss_q3_mean       | 0.0363   |
+| samples                | 721      |
+| step                   | 720      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00911  |
+| mse_label_cond_q0_mean | 0.00259  |
+| mse_label_cond_q1_mean | 0.00693  |
+| mse_label_cond_q2_mean | 0.0114   |
+| mse_label_cond_q3_mean | 0.0127   |
+| mse_loss_mean          | 0.0332   |
+| mse_loss_q0_mean       | 0.0208   |
+| mse_loss_q1_mean       | 0.0273   |
+| mse_loss_q2_mean       | 0.0286   |
+| mse_loss_q3_mean       | 0.0482   |
+| samples                | 731      |
+| step                   | 730      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00639  |
+| mse_label_cond_q0_mean | 0.00284  |
+| mse_label_cond_q1_mean | 0.00732  |
+| mse_label_cond_q2_mean | 0.00749  |
+| mse_label_cond_q3_mean | 0.00718  |
+| mse_loss_mean          | 0.0262   |
+| mse_loss_q0_mean       | 0.0183   |
+| mse_loss_q1_mean       | 0.0212   |
+| mse_loss_q2_mean       | 0.0201   |
+| mse_loss_q3_mean       | 0.0355   |
+| samples                | 741      |
+| step                   | 740      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00522  |
+| mse_label_cond_q0_mean | 0.00428  |
+| mse_label_cond_q1_mean | 0.00459  |
+| mse_label_cond_q2_mean | 0.00451  |
+| mse_label_cond_q3_mean | 0.00638  |
+| mse_loss_mean          | 0.0246   |
+| mse_loss_q0_mean       | 0.0126   |
+| mse_loss_q1_mean       | 0.0145   |
+| mse_loss_q2_mean       | 0.0179   |
+| mse_loss_q3_mean       | 0.0382   |
+| samples                | 751      |
+| step                   | 750      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00672  |
+| mse_label_cond_q0_mean | 0.00601  |
+| mse_label_cond_q1_mean | 0.00447  |
+| mse_label_cond_q2_mean | 0.00895  |
+| mse_label_cond_q3_mean | 0.0097   |
+| mse_loss_mean          | 0.0185   |
+| mse_loss_q0_mean       | 0.0119   |
+| mse_loss_q1_mean       | 0.0142   |
+| mse_loss_q2_mean       | 0.0175   |
+| mse_loss_q3_mean       | 0.0347   |
+| samples                | 761      |
+| step                   | 760      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00541  |
+| mse_label_cond_q1_mean | 0.00467  |
+| mse_label_cond_q2_mean | 0.00586  |
+| mse_label_cond_q3_mean | 0.00532  |
+| mse_loss_mean          | 0.0205   |
+| mse_loss_q1_mean       | 0.0115   |
+| mse_loss_q2_mean       | 0.0148   |
+| mse_loss_q3_mean       | 0.0307   |
+| samples                | 771      |
+| step                   | 770      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0126   |
+| mse_label_cond_q0_mean | 0.00815  |
+| mse_label_cond_q1_mean | 0.0145   |
+| mse_label_cond_q2_mean | 0.0109   |
+| mse_label_cond_q3_mean | 0.0162   |
+| mse_loss_mean          | 0.0429   |
+| mse_loss_q0_mean       | 0.0345   |
+| mse_loss_q1_mean       | 0.0468   |
+| mse_loss_q2_mean       | 0.0274   |
+| mse_loss_q3_mean       | 0.0561   |
+| samples                | 781      |
+| step                   | 780      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00712  |
+| mse_label_cond_q0_mean | 0.0056   |
+| mse_label_cond_q1_mean | 0.00454  |
+| mse_label_cond_q2_mean | 0.0105   |
+| mse_label_cond_q3_mean | 0.00749  |
+| mse_loss_mean          | 0.0302   |
+| mse_loss_q0_mean       | 0.0224   |
+| mse_loss_q1_mean       | 0.0168   |
+| mse_loss_q2_mean       | 0.0329   |
+| mse_loss_q3_mean       | 0.0395   |
+| samples                | 791      |
+| step                   | 790      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00744  |
+| mse_label_cond_q0_mean | 0.00741  |
+| mse_label_cond_q1_mean | 0.00383  |
+| mse_label_cond_q2_mean | 0.00678  |
+| mse_label_cond_q3_mean | 0.0115   |
+| mse_loss_mean          | 0.026    |
+| mse_loss_q0_mean       | 0.0172   |
+| mse_loss_q1_mean       | 0.0176   |
+| mse_loss_q2_mean       | 0.0211   |
+| mse_loss_q3_mean       | 0.0436   |
+| samples                | 801      |
+| step                   | 800      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0077   |
+| mse_label_cond_q0_mean | 0.00686  |
+| mse_label_cond_q1_mean | 0.00981  |
+| mse_label_cond_q2_mean | 0.00731  |
+| mse_label_cond_q3_mean | 0.00767  |
+| mse_loss_mean          | 0.0261   |
+| mse_loss_q0_mean       | 0.0231   |
+| mse_loss_q1_mean       | 0.0243   |
+| mse_loss_q2_mean       | 0.0213   |
+| mse_loss_q3_mean       | 0.0385   |
+| samples                | 811      |
+| step                   | 810      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00591  |
+| mse_label_cond_q0_mean | 0.00343  |
+| mse_label_cond_q1_mean | 0.00722  |
+| mse_label_cond_q2_mean | 0.00578  |
+| mse_label_cond_q3_mean | 0.00517  |
+| mse_loss_mean          | 0.0163   |
+| mse_loss_q0_mean       | 0.011    |
+| mse_loss_q1_mean       | 0.0155   |
+| mse_loss_q2_mean       | 0.0171   |
+| mse_loss_q3_mean       | 0.0234   |
+| samples                | 821      |
+| step                   | 820      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00529  |
+| mse_label_cond_q0_mean | 0.0043   |
+| mse_label_cond_q1_mean | 0.00426  |
+| mse_label_cond_q2_mean | 0.00571  |
+| mse_label_cond_q3_mean | 0.0115   |
+| mse_loss_mean          | 0.0138   |
+| mse_loss_q0_mean       | 0.0103   |
+| mse_loss_q1_mean       | 0.0147   |
+| mse_loss_q2_mean       | 0.0127   |
+| mse_loss_q3_mean       | 0.0318   |
+| samples                | 831      |
+| step                   | 830      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00404  |
+| mse_label_cond_q0_mean | 0.00391  |
+| mse_label_cond_q1_mean | 0.00547  |
+| mse_label_cond_q2_mean | 0.00302  |
+| mse_label_cond_q3_mean | 0.00318  |
+| mse_loss_mean          | 0.0133   |
+| mse_loss_q0_mean       | 0.0119   |
+| mse_loss_q1_mean       | 0.0124   |
+| mse_loss_q2_mean       | 0.0136   |
+| mse_loss_q3_mean       | 0.0187   |
+| samples                | 841      |
+| step                   | 840      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00542  |
+| mse_label_cond_q0_mean | 0.00828  |
+| mse_label_cond_q1_mean | 0.00539  |
+| mse_label_cond_q2_mean | 0.00354  |
+| mse_label_cond_q3_mean | 0.00574  |
+| mse_loss_mean          | 0.0157   |
+| mse_loss_q0_mean       | 0.0202   |
+| mse_loss_q1_mean       | 0.0138   |
+| mse_loss_q2_mean       | 0.0159   |
+| mse_loss_q3_mean       | 0.0166   |
+| samples                | 851      |
+| step                   | 850      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00464  |
+| mse_label_cond_q0_mean | 0.00466  |
+| mse_label_cond_q1_mean | 0.00493  |
+| mse_label_cond_q2_mean | 0.00352  |
+| mse_label_cond_q3_mean | 0.00592  |
+| mse_loss_mean          | 0.0137   |
+| mse_loss_q0_mean       | 0.013    |
+| mse_loss_q1_mean       | 0.0121   |
+| mse_loss_q2_mean       | 0.0131   |
+| mse_loss_q3_mean       | 0.0227   |
+| samples                | 861      |
+| step                   | 860      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00613  |
+| mse_label_cond_q0_mean | 0.00375  |
+| mse_label_cond_q1_mean | 0.00418  |
+| mse_label_cond_q2_mean | 0.00681  |
+| mse_label_cond_q3_mean | 0.00721  |
+| mse_loss_mean          | 0.0158   |
+| mse_loss_q0_mean       | 0.0109   |
+| mse_loss_q1_mean       | 0.0138   |
+| mse_loss_q2_mean       | 0.0134   |
+| mse_loss_q3_mean       | 0.0191   |
+| samples                | 871      |
+| step                   | 870      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00529  |
+| mse_label_cond_q0_mean | 0.00652  |
+| mse_label_cond_q1_mean | 0.00523  |
+| mse_label_cond_q2_mean | 0.00484  |
+| mse_loss_mean          | 0.0136   |
+| mse_loss_q0_mean       | 0.0117   |
+| mse_loss_q1_mean       | 0.0136   |
+| mse_loss_q2_mean       | 0.0143   |
+| samples                | 881      |
+| step                   | 880      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00433  |
+| mse_label_cond_q0_mean | 0.00209  |
+| mse_label_cond_q1_mean | 0.00639  |
+| mse_label_cond_q2_mean | 0.00437  |
+| mse_label_cond_q3_mean | 0.00518  |
+| mse_loss_mean          | 0.0127   |
+| mse_loss_q0_mean       | 0.00998  |
+| mse_loss_q1_mean       | 0.0119   |
+| mse_loss_q2_mean       | 0.0123   |
+| mse_loss_q3_mean       | 0.0162   |
+| samples                | 891      |
+| step                   | 890      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00397  |
+| mse_label_cond_q0_mean | 0.00304  |
+| mse_label_cond_q1_mean | 0.00545  |
+| mse_label_cond_q2_mean | 0.00274  |
+| mse_loss_mean          | 0.00976  |
+| mse_loss_q0_mean       | 0.00858  |
+| mse_loss_q1_mean       | 0.0103   |
+| mse_loss_q2_mean       | 0.0134   |
+| samples                | 901      |
+| step                   | 900      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00372  |
+| mse_label_cond_q0_mean | 0.00291  |
+| mse_label_cond_q1_mean | 0.00154  |
+| mse_label_cond_q2_mean | 0.00413  |
+| mse_label_cond_q3_mean | 0.00753  |
+| mse_loss_mean          | 0.0113   |
+| mse_loss_q0_mean       | 0.00863  |
+| mse_loss_q1_mean       | 0.0105   |
+| mse_loss_q2_mean       | 0.0122   |
+| mse_loss_q3_mean       | 0.019    |
+| samples                | 911      |
+| step                   | 910      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0048   |
+| mse_label_cond_q0_mean | 0.0051   |
+| mse_label_cond_q1_mean | 0.00273  |
+| mse_label_cond_q2_mean | 0.00416  |
+| mse_label_cond_q3_mean | 0.00737  |
+| mse_loss_mean          | 0.0116   |
+| mse_loss_q0_mean       | 0.0114   |
+| mse_loss_q1_mean       | 0.0083   |
+| mse_loss_q2_mean       | 0.0108   |
+| mse_loss_q3_mean       | 0.0165   |
+| samples                | 921      |
+| step                   | 920      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00362  |
+| mse_label_cond_q0_mean | 0.00417  |
+| mse_label_cond_q1_mean | 0.0041   |
+| mse_label_cond_q2_mean | 0.00207  |
+| mse_label_cond_q3_mean | 0.00375  |
+| mse_loss_mean          | 0.0118   |
+| mse_loss_q0_mean       | 0.0113   |
+| mse_loss_q1_mean       | 0.0124   |
+| mse_loss_q2_mean       | 0.0116   |
+| mse_loss_q3_mean       | 0.0124   |
+| samples                | 931      |
+| step                   | 930      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00444  |
+| mse_label_cond_q0_mean | 0.00439  |
+| mse_label_cond_q1_mean | 0.00294  |
+| mse_label_cond_q2_mean | 0.00562  |
+| mse_label_cond_q3_mean | 0.00498  |
+| mse_loss_mean          | 0.0125   |
+| mse_loss_q0_mean       | 0.0103   |
+| mse_loss_q1_mean       | 0.0086   |
+| mse_loss_q2_mean       | 0.0145   |
+| mse_loss_q3_mean       | 0.0177   |
+| samples                | 941      |
+| step                   | 940      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00377  |
+| mse_label_cond_q0_mean | 0.00306  |
+| mse_label_cond_q1_mean | 0.00199  |
+| mse_label_cond_q2_mean | 0.00341  |
+| mse_label_cond_q3_mean | 0.00492  |
+| mse_loss_mean          | 0.0119   |
+| mse_loss_q0_mean       | 0.011    |
+| mse_loss_q1_mean       | 0.00834  |
+| mse_loss_q2_mean       | 0.011    |
+| mse_loss_q3_mean       | 0.0139   |
+| samples                | 951      |
+| step                   | 950      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00325  |
+| mse_label_cond_q0_mean | 0.00273  |
+| mse_label_cond_q1_mean | 0.00318  |
+| mse_label_cond_q2_mean | 0.00316  |
+| mse_label_cond_q3_mean | 0.00389  |
+| mse_loss_mean          | 0.0117   |
+| mse_loss_q0_mean       | 0.00947  |
+| mse_loss_q1_mean       | 0.00988  |
+| mse_loss_q2_mean       | 0.0116   |
+| mse_loss_q3_mean       | 0.0151   |
+| samples                | 961      |
+| step                   | 960      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00498  |
+| mse_label_cond_q0_mean | 0.00451  |
+| mse_label_cond_q1_mean | 0.00412  |
+| mse_label_cond_q2_mean | 0.00502  |
+| mse_label_cond_q3_mean | 0.00742  |
+| mse_loss_mean          | 0.0123   |
+| mse_loss_q0_mean       | 0.011    |
+| mse_loss_q1_mean       | 0.0119   |
+| mse_loss_q2_mean       | 0.0116   |
+| mse_loss_q3_mean       | 0.0194   |
+| samples                | 971      |
+| step                   | 970      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00471  |
+| mse_label_cond_q0_mean | 0.00399  |
+| mse_label_cond_q1_mean | 0.00489  |
+| mse_label_cond_q2_mean | 0.00192  |
+| mse_label_cond_q3_mean | 0.00585  |
+| mse_loss_mean          | 0.0143   |
+| mse_loss_q0_mean       | 0.0116   |
+| mse_loss_q1_mean       | 0.0131   |
+| mse_loss_q2_mean       | 0.011    |
+| mse_loss_q3_mean       | 0.0177   |
+| samples                | 981      |
+| step                   | 980      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00467  |
+| mse_label_cond_q0_mean | 0.0063   |
+| mse_label_cond_q1_mean | 0.00601  |
+| mse_label_cond_q2_mean | 0.00326  |
+| mse_label_cond_q3_mean | 0.00401  |
+| mse_loss_mean          | 0.0131   |
+| mse_loss_q0_mean       | 0.016    |
+| mse_loss_q1_mean       | 0.0124   |
+| mse_loss_q2_mean       | 0.0117   |
+| mse_loss_q3_mean       | 0.0118   |
+| samples                | 991      |
+| step                   | 990      |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00558  |
+| mse_label_cond_q1_mean | 0.00526  |
+| mse_label_cond_q2_mean | 0.0051   |
+| mse_label_cond_q3_mean | 0.00611  |
+| mse_loss_mean          | 0.0146   |
+| mse_loss_q1_mean       | 0.0134   |
+| mse_loss_q2_mean       | 0.00986  |
+| mse_loss_q3_mean       | 0.0172   |
+| samples                | 1e+03    |
+| step                   | 1e+03    |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00359  |
+| mse_label_cond_q0_mean | 0.00492  |
+| mse_label_cond_q1_mean | 0.00243  |
+| mse_label_cond_q2_mean | 0.00394  |
+| mse_label_cond_q3_mean | 0.00453  |
+| mse_loss_mean          | 0.0116   |
+| mse_loss_q0_mean       | 0.014    |
+| mse_loss_q1_mean       | 0.0106   |
+| mse_loss_q2_mean       | 0.0103   |
+| mse_loss_q3_mean       | 0.0147   |
+| samples                | 1.01e+03 |
+| step                   | 1.01e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00424  |
+| mse_label_cond_q0_mean | 0.00489  |
+| mse_label_cond_q1_mean | 0.00397  |
+| mse_label_cond_q2_mean | 0.00487  |
+| mse_loss_mean          | 0.0122   |
+| mse_loss_q0_mean       | 0.0117   |
+| mse_loss_q1_mean       | 0.0124   |
+| mse_loss_q2_mean       | 0.0122   |
+| samples                | 1.02e+03 |
+| step                   | 1.02e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00399  |
+| mse_label_cond_q1_mean | 0.00535  |
+| mse_label_cond_q2_mean | 0.00433  |
+| mse_label_cond_q3_mean | 0.0037   |
+| mse_loss_mean          | 0.0124   |
+| mse_loss_q1_mean       | 0.0122   |
+| mse_loss_q2_mean       | 0.0133   |
+| mse_loss_q3_mean       | 0.0122   |
+| samples                | 1.03e+03 |
+| step                   | 1.03e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0042   |
+| mse_label_cond_q0_mean | 0.00594  |
+| mse_label_cond_q1_mean | 0.00432  |
+| mse_label_cond_q2_mean | 0.00379  |
+| mse_label_cond_q3_mean | 0.00523  |
+| mse_loss_mean          | 0.0105   |
+| mse_loss_q0_mean       | 0.00967  |
+| mse_loss_q1_mean       | 0.00952  |
+| mse_loss_q2_mean       | 0.0103   |
+| mse_loss_q3_mean       | 0.0134   |
+| samples                | 1.04e+03 |
+| step                   | 1.04e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00422  |
+| mse_label_cond_q0_mean | 0.00161  |
+| mse_label_cond_q1_mean | 0.00509  |
+| mse_label_cond_q2_mean | 0.00401  |
+| mse_label_cond_q3_mean | 0.00417  |
+| mse_loss_mean          | 0.0111   |
+| mse_loss_q0_mean       | 0.00946  |
+| mse_loss_q1_mean       | 0.0112   |
+| mse_loss_q2_mean       | 0.0114   |
+| mse_loss_q3_mean       | 0.0114   |
+| samples                | 1.05e+03 |
+| step                   | 1.05e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00459  |
+| mse_label_cond_q0_mean | 0.00445  |
+| mse_label_cond_q1_mean | 0.00444  |
+| mse_label_cond_q2_mean | 0.00545  |
+| mse_label_cond_q3_mean | 0.00418  |
+| mse_loss_mean          | 0.0117   |
+| mse_loss_q0_mean       | 0.0115   |
+| mse_loss_q1_mean       | 0.00908  |
+| mse_loss_q2_mean       | 0.012    |
+| mse_loss_q3_mean       | 0.0132   |
+| samples                | 1.06e+03 |
+| step                   | 1.06e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00417  |
+| mse_label_cond_q0_mean | 0.00475  |
+| mse_label_cond_q1_mean | 0.00191  |
+| mse_label_cond_q2_mean | 0.00519  |
+| mse_label_cond_q3_mean | 0.00329  |
+| mse_loss_mean          | 0.0109   |
+| mse_loss_q0_mean       | 0.0114   |
+| mse_loss_q1_mean       | 0.00893  |
+| mse_loss_q2_mean       | 0.0112   |
+| mse_loss_q3_mean       | 0.0123   |
+| samples                | 1.07e+03 |
+| step                   | 1.07e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00379  |
+| mse_label_cond_q0_mean | 0.00369  |
+| mse_label_cond_q1_mean | 0.00481  |
+| mse_label_cond_q2_mean | 0.00308  |
+| mse_loss_mean          | 0.0116   |
+| mse_loss_q0_mean       | 0.0102   |
+| mse_loss_q1_mean       | 0.011    |
+| mse_loss_q2_mean       | 0.0165   |
+| samples                | 1.08e+03 |
+| step                   | 1.08e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00514  |
+| mse_label_cond_q0_mean | 0.00379  |
+| mse_label_cond_q1_mean | 0.00713  |
+| mse_label_cond_q3_mean | 0.00515  |
+| mse_loss_mean          | 0.0124   |
+| mse_loss_q0_mean       | 0.00956  |
+| mse_loss_q1_mean       | 0.0135   |
+| mse_loss_q3_mean       | 0.0137   |
+| samples                | 1.09e+03 |
+| step                   | 1.09e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0042   |
+| mse_label_cond_q0_mean | 0.00311  |
+| mse_label_cond_q1_mean | 0.00452  |
+| mse_label_cond_q2_mean | 0.00504  |
+| mse_label_cond_q3_mean | 0.00387  |
+| mse_loss_mean          | 0.0119   |
+| mse_loss_q0_mean       | 0.0108   |
+| mse_loss_q1_mean       | 0.0117   |
+| mse_loss_q2_mean       | 0.0127   |
+| mse_loss_q3_mean       | 0.0119   |
+| samples                | 1.1e+03  |
+| step                   | 1.1e+03  |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00399  |
+| mse_label_cond_q0_mean | 0.00406  |
+| mse_label_cond_q1_mean | 0.00368  |
+| mse_label_cond_q3_mean | 0.00422  |
+| mse_loss_mean          | 0.0106   |
+| mse_loss_q0_mean       | 0.00957  |
+| mse_loss_q1_mean       | 0.0106   |
+| mse_loss_q3_mean       | 0.012    |
+| samples                | 1.11e+03 |
+| step                   | 1.11e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00299  |
+| mse_label_cond_q0_mean | 0.00309  |
+| mse_label_cond_q1_mean | 0.00156  |
+| mse_label_cond_q2_mean | 0.00495  |
+| mse_label_cond_q3_mean | 0.00318  |
+| mse_loss_mean          | 0.0102   |
+| mse_loss_q0_mean       | 0.0104   |
+| mse_loss_q1_mean       | 0.0082   |
+| mse_loss_q2_mean       | 0.00998  |
+| mse_loss_q3_mean       | 0.0117   |
+| samples                | 1.12e+03 |
+| step                   | 1.12e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00395  |
+| mse_label_cond_q0_mean | 0.00448  |
+| mse_label_cond_q1_mean | 0.00441  |
+| mse_label_cond_q3_mean | 0.0032   |
+| mse_loss_mean          | 0.0114   |
+| mse_loss_q0_mean       | 0.011    |
+| mse_loss_q1_mean       | 0.0102   |
+| mse_loss_q3_mean       | 0.0126   |
+| samples                | 1.13e+03 |
+| step                   | 1.13e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00561  |
+| mse_label_cond_q0_mean | 0.0106   |
+| mse_label_cond_q1_mean | 0.00549  |
+| mse_label_cond_q2_mean | 0.00423  |
+| mse_label_cond_q3_mean | 0.00607  |
+| mse_loss_mean          | 0.012    |
+| mse_loss_q0_mean       | 0.0194   |
+| mse_loss_q1_mean       | 0.0101   |
+| mse_loss_q2_mean       | 0.0102   |
+| mse_loss_q3_mean       | 0.0148   |
+| samples                | 1.14e+03 |
+| step                   | 1.14e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00338  |
+| mse_label_cond_q0_mean | 0.00396  |
+| mse_label_cond_q1_mean | 0.00305  |
+| mse_label_cond_q2_mean | 0.00315  |
+| mse_label_cond_q3_mean | 0.00378  |
+| mse_loss_mean          | 0.0103   |
+| mse_loss_q0_mean       | 0.00788  |
+| mse_loss_q1_mean       | 0.00984  |
+| mse_loss_q2_mean       | 0.0101   |
+| mse_loss_q3_mean       | 0.0118   |
+| samples                | 1.15e+03 |
+| step                   | 1.15e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00493  |
+| mse_label_cond_q0_mean | 0.00517  |
+| mse_label_cond_q1_mean | 0.00478  |
+| mse_label_cond_q2_mean | 0.00546  |
+| mse_label_cond_q3_mean | 0.00394  |
+| mse_loss_mean          | 0.012    |
+| mse_loss_q0_mean       | 0.0103   |
+| mse_loss_q1_mean       | 0.0102   |
+| mse_loss_q2_mean       | 0.0136   |
+| mse_loss_q3_mean       | 0.0139   |
+| samples                | 1.16e+03 |
+| step                   | 1.16e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00339  |
+| mse_label_cond_q0_mean | 0.00311  |
+| mse_label_cond_q1_mean | 0.00491  |
+| mse_label_cond_q2_mean | 0.00256  |
+| mse_label_cond_q3_mean | 0.00211  |
+| mse_loss_mean          | 0.0102   |
+| mse_loss_q0_mean       | 0.00945  |
+| mse_loss_q1_mean       | 0.0107   |
+| mse_loss_q2_mean       | 0.00974  |
+| mse_loss_q3_mean       | 0.0119   |
+| samples                | 1.17e+03 |
+| step                   | 1.17e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00386  |
+| mse_label_cond_q0_mean | 0.0032   |
+| mse_label_cond_q1_mean | 0.00385  |
+| mse_label_cond_q2_mean | 0.00241  |
+| mse_label_cond_q3_mean | 0.00575  |
+| mse_loss_mean          | 0.0135   |
+| mse_loss_q0_mean       | 0.00822  |
+| mse_loss_q1_mean       | 0.0105   |
+| mse_loss_q2_mean       | 0.0095   |
+| mse_loss_q3_mean       | 0.0231   |
+| samples                | 1.18e+03 |
+| step                   | 1.18e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00476  |
+| mse_label_cond_q0_mean | 0.00419  |
+| mse_label_cond_q1_mean | 0.00553  |
+| mse_label_cond_q2_mean | 0.00463  |
+| mse_label_cond_q3_mean | 0.00506  |
+| mse_loss_mean          | 0.0115   |
+| mse_loss_q0_mean       | 0.00812  |
+| mse_loss_q1_mean       | 0.0105   |
+| mse_loss_q2_mean       | 0.013    |
+| mse_loss_q3_mean       | 0.012    |
+| samples                | 1.19e+03 |
+| step                   | 1.19e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00418  |
+| mse_label_cond_q0_mean | 0.00459  |
+| mse_label_cond_q1_mean | 0.00415  |
+| mse_label_cond_q2_mean | 0.00183  |
+| mse_label_cond_q3_mean | 0.00505  |
+| mse_loss_mean          | 0.0111   |
+| mse_loss_q0_mean       | 0.0123   |
+| mse_loss_q1_mean       | 0.0105   |
+| mse_loss_q2_mean       | 0.0092   |
+| mse_loss_q3_mean       | 0.0104   |
+| samples                | 1.2e+03  |
+| step                   | 1.2e+03  |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00445  |
+| mse_label_cond_q0_mean | 0.00441  |
+| mse_label_cond_q1_mean | 0.00551  |
+| mse_label_cond_q2_mean | 0.00432  |
+| mse_label_cond_q3_mean | 0.00365  |
+| mse_loss_mean          | 0.0113   |
+| mse_loss_q0_mean       | 0.0108   |
+| mse_loss_q1_mean       | 0.0107   |
+| mse_loss_q2_mean       | 0.0118   |
+| mse_loss_q3_mean       | 0.0119   |
+| samples                | 1.21e+03 |
+| step                   | 1.21e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00404  |
+| mse_label_cond_q0_mean | 0.00373  |
+| mse_label_cond_q1_mean | 0.00455  |
+| mse_label_cond_q2_mean | 0.00146  |
+| mse_label_cond_q3_mean | 0.00517  |
+| mse_loss_mean          | 0.0111   |
+| mse_loss_q0_mean       | 0.00927  |
+| mse_loss_q1_mean       | 0.0122   |
+| mse_loss_q2_mean       | 0.00953  |
+| mse_loss_q3_mean       | 0.0136   |
+| samples                | 1.22e+03 |
+| step                   | 1.22e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00413  |
+| mse_label_cond_q0_mean | 0.0041   |
+| mse_label_cond_q1_mean | 0.00468  |
+| mse_label_cond_q2_mean | 0.004    |
+| mse_loss_mean          | 0.0107   |
+| mse_loss_q0_mean       | 0.0104   |
+| mse_loss_q1_mean       | 0.00985  |
+| mse_loss_q2_mean       | 0.0116   |
+| samples                | 1.23e+03 |
+| step                   | 1.23e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00351  |
+| mse_label_cond_q0_mean | 0.00304  |
+| mse_label_cond_q1_mean | 0.00483  |
+| mse_label_cond_q3_mean | 0.00272  |
+| mse_loss_mean          | 0.01     |
+| mse_loss_q0_mean       | 0.00965  |
+| mse_loss_q1_mean       | 0.0107   |
+| mse_loss_q3_mean       | 0.00999  |
+| samples                | 1.24e+03 |
+| step                   | 1.24e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00493  |
+| mse_label_cond_q0_mean | 0.01     |
+| mse_label_cond_q2_mean | 0.00466  |
+| mse_label_cond_q3_mean | 0.00413  |
+| mse_loss_mean          | 0.0128   |
+| mse_loss_q0_mean       | 0.0159   |
+| mse_loss_q2_mean       | 0.0118   |
+| mse_loss_q3_mean       | 0.013    |
+| samples                | 1.25e+03 |
+| step                   | 1.25e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00539  |
+| mse_label_cond_q0_mean | 0.00728  |
+| mse_label_cond_q1_mean | 0.00151  |
+| mse_label_cond_q2_mean | 0.00529  |
+| mse_label_cond_q3_mean | 0.00505  |
+| mse_loss_mean          | 0.0131   |
+| mse_loss_q0_mean       | 0.012    |
+| mse_loss_q1_mean       | 0.00742  |
+| mse_loss_q2_mean       | 0.0103   |
+| mse_loss_q3_mean       | 0.0155   |
+| samples                | 1.26e+03 |
+| step                   | 1.26e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00471  |
+| mse_label_cond_q0_mean | 0.00447  |
+| mse_label_cond_q1_mean | 0.00242  |
+| mse_label_cond_q3_mean | 0.00578  |
+| mse_loss_mean          | 0.0128   |
+| mse_loss_q0_mean       | 0.0124   |
+| mse_loss_q1_mean       | 0.0127   |
+| mse_loss_q3_mean       | 0.0131   |
+| samples                | 1.27e+03 |
+| step                   | 1.27e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00418  |
+| mse_label_cond_q0_mean | 0.00414  |
+| mse_label_cond_q1_mean | 0.00275  |
+| mse_label_cond_q2_mean | 0.0022   |
+| mse_label_cond_q3_mean | 0.00541  |
+| mse_loss_mean          | 0.0114   |
+| mse_loss_q0_mean       | 0.0107   |
+| mse_loss_q1_mean       | 0.00877  |
+| mse_loss_q2_mean       | 0.0091   |
+| mse_loss_q3_mean       | 0.0139   |
+| samples                | 1.28e+03 |
+| step                   | 1.28e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00559  |
+| mse_label_cond_q0_mean | 0.00658  |
+| mse_label_cond_q1_mean | 0.00533  |
+| mse_label_cond_q2_mean | 0.00556  |
+| mse_label_cond_q3_mean | 0.00431  |
+| mse_loss_mean          | 0.0117   |
+| mse_loss_q0_mean       | 0.0121   |
+| mse_loss_q1_mean       | 0.0113   |
+| mse_loss_q2_mean       | 0.0117   |
+| mse_loss_q3_mean       | 0.0114   |
+| samples                | 1.29e+03 |
+| step                   | 1.29e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00346  |
+| mse_label_cond_q0_mean | 0.00587  |
+| mse_label_cond_q1_mean | 0.00232  |
+| mse_label_cond_q2_mean | 0.00348  |
+| mse_label_cond_q3_mean | 0.00509  |
+| mse_loss_mean          | 0.0112   |
+| mse_loss_q0_mean       | 0.0127   |
+| mse_loss_q1_mean       | 0.0103   |
+| mse_loss_q2_mean       | 0.00993  |
+| mse_loss_q3_mean       | 0.014    |
+| samples                | 1.3e+03  |
+| step                   | 1.3e+03  |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00403  |
+| mse_label_cond_q0_mean | 0.00285  |
+| mse_label_cond_q1_mean | 0.00686  |
+| mse_label_cond_q2_mean | 0.00254  |
+| mse_label_cond_q3_mean | 0.00354  |
+| mse_loss_mean          | 0.01     |
+| mse_loss_q0_mean       | 0.00941  |
+| mse_loss_q1_mean       | 0.0114   |
+| mse_loss_q2_mean       | 0.01     |
+| mse_loss_q3_mean       | 0.00794  |
+| samples                | 1.31e+03 |
+| step                   | 1.31e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00356  |
+| mse_label_cond_q0_mean | 0.00374  |
+| mse_label_cond_q1_mean | 0.00294  |
+| mse_label_cond_q2_mean | 0.00417  |
+| mse_label_cond_q3_mean | 0.00366  |
+| mse_loss_mean          | 0.0101   |
+| mse_loss_q0_mean       | 0.00884  |
+| mse_loss_q1_mean       | 0.00952  |
+| mse_loss_q2_mean       | 0.0103   |
+| mse_loss_q3_mean       | 0.0113   |
+| samples                | 1.32e+03 |
+| step                   | 1.32e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00399  |
+| mse_label_cond_q0_mean | 0.00351  |
+| mse_label_cond_q1_mean | 0.00399  |
+| mse_label_cond_q2_mean | 0.00342  |
+| mse_label_cond_q3_mean | 0.00505  |
+| mse_loss_mean          | 0.0113   |
+| mse_loss_q0_mean       | 0.00895  |
+| mse_loss_q1_mean       | 0.0124   |
+| mse_loss_q2_mean       | 0.0117   |
+| mse_loss_q3_mean       | 0.0112   |
+| samples                | 1.33e+03 |
+| step                   | 1.33e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00419  |
+| mse_label_cond_q0_mean | 0.00383  |
+| mse_label_cond_q1_mean | 0.00576  |
+| mse_label_cond_q2_mean | 0.0028   |
+| mse_label_cond_q3_mean | 0.00228  |
+| mse_loss_mean          | 0.0106   |
+| mse_loss_q0_mean       | 0.0082   |
+| mse_loss_q1_mean       | 0.0121   |
+| mse_loss_q2_mean       | 0.00871  |
+| mse_loss_q3_mean       | 0.012    |
+| samples                | 1.34e+03 |
+| step                   | 1.34e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0043   |
+| mse_label_cond_q0_mean | 0.00395  |
+| mse_label_cond_q2_mean | 0.00332  |
+| mse_label_cond_q3_mean | 0.00546  |
+| mse_loss_mean          | 0.0115   |
+| mse_loss_q0_mean       | 0.0116   |
+| mse_loss_q2_mean       | 0.0095   |
+| mse_loss_q3_mean       | 0.0133   |
+| samples                | 1.35e+03 |
+| step                   | 1.35e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00362  |
+| mse_label_cond_q0_mean | 0.0017   |
+| mse_label_cond_q1_mean | 0.00327  |
+| mse_label_cond_q2_mean | 0.00464  |
+| mse_label_cond_q3_mean | 0.00455  |
+| mse_loss_mean          | 0.00996  |
+| mse_loss_q0_mean       | 0.00865  |
+| mse_loss_q1_mean       | 0.00955  |
+| mse_loss_q2_mean       | 0.00998  |
+| mse_loss_q3_mean       | 0.0119   |
+| samples                | 1.36e+03 |
+| step                   | 1.36e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00321  |
+| mse_label_cond_q0_mean | 0.00398  |
+| mse_label_cond_q1_mean | 0.0028   |
+| mse_label_cond_q2_mean | 0.0029   |
+| mse_label_cond_q3_mean | 0.0031   |
+| mse_loss_mean          | 0.0111   |
+| mse_loss_q0_mean       | 0.0116   |
+| mse_loss_q1_mean       | 0.00972  |
+| mse_loss_q2_mean       | 0.011    |
+| mse_loss_q3_mean       | 0.0146   |
+| samples                | 1.37e+03 |
+| step                   | 1.37e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00457  |
+| mse_label_cond_q1_mean | 0.00353  |
+| mse_label_cond_q2_mean | 0.00333  |
+| mse_label_cond_q3_mean | 0.00568  |
+| mse_loss_mean          | 0.0134   |
+| mse_loss_q1_mean       | 0.0128   |
+| mse_loss_q2_mean       | 0.0118   |
+| mse_loss_q3_mean       | 0.0145   |
+| samples                | 1.38e+03 |
+| step                   | 1.38e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00403  |
+| mse_label_cond_q2_mean | 0.00401  |
+| mse_label_cond_q3_mean | 0.00406  |
+| mse_loss_mean          | 0.0117   |
+| mse_loss_q2_mean       | 0.0119   |
+| mse_loss_q3_mean       | 0.0111   |
+| samples                | 1.39e+03 |
+| step                   | 1.39e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00422  |
+| mse_label_cond_q0_mean | 0.00453  |
+| mse_label_cond_q1_mean | 0.00554  |
+| mse_label_cond_q2_mean | 0.00359  |
+| mse_label_cond_q3_mean | 0.00473  |
+| mse_loss_mean          | 0.0106   |
+| mse_loss_q0_mean       | 0.00972  |
+| mse_loss_q1_mean       | 0.01     |
+| mse_loss_q2_mean       | 0.00938  |
+| mse_loss_q3_mean       | 0.0132   |
+| samples                | 1.4e+03  |
+| step                   | 1.4e+03  |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00441  |
+| mse_label_cond_q0_mean | 0.00459  |
+| mse_label_cond_q1_mean | 0.00483  |
+| mse_label_cond_q2_mean | 0.00388  |
+| mse_label_cond_q3_mean | 0.00373  |
+| mse_loss_mean          | 0.0111   |
+| mse_loss_q0_mean       | 0.0101   |
+| mse_loss_q1_mean       | 0.0106   |
+| mse_loss_q2_mean       | 0.0113   |
+| mse_loss_q3_mean       | 0.0147   |
+| samples                | 1.41e+03 |
+| step                   | 1.41e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0035   |
+| mse_label_cond_q0_mean | 0.00332  |
+| mse_label_cond_q1_mean | 0.00448  |
+| mse_label_cond_q2_mean | 0.00336  |
+| mse_label_cond_q3_mean | 0.00357  |
+| mse_loss_mean          | 0.0112   |
+| mse_loss_q0_mean       | 0.0113   |
+| mse_loss_q1_mean       | 0.0105   |
+| mse_loss_q2_mean       | 0.00894  |
+| mse_loss_q3_mean       | 0.0136   |
+| samples                | 1.42e+03 |
+| step                   | 1.42e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00351  |
+| mse_label_cond_q0_mean | 0.00337  |
+| mse_label_cond_q1_mean | 0.00373  |
+| mse_label_cond_q2_mean | 0.00363  |
+| mse_label_cond_q3_mean | 0.00342  |
+| mse_loss_mean          | 0.00996  |
+| mse_loss_q0_mean       | 0.00948  |
+| mse_loss_q1_mean       | 0.0102   |
+| mse_loss_q2_mean       | 0.00911  |
+| mse_loss_q3_mean       | 0.011    |
+| samples                | 1.43e+03 |
+| step                   | 1.43e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00323  |
+| mse_label_cond_q0_mean | 0.00249  |
+| mse_label_cond_q1_mean | 0.00411  |
+| mse_label_cond_q2_mean | 0.00393  |
+| mse_label_cond_q3_mean | 0.00287  |
+| mse_loss_mean          | 0.00962  |
+| mse_loss_q0_mean       | 0.00991  |
+| mse_loss_q1_mean       | 0.00937  |
+| mse_loss_q2_mean       | 0.00898  |
+| mse_loss_q3_mean       | 0.00981  |
+| samples                | 1.44e+03 |
+| step                   | 1.44e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00364  |
+| mse_label_cond_q0_mean | 0.00217  |
+| mse_label_cond_q1_mean | 0.00487  |
+| mse_label_cond_q2_mean | 0.00395  |
+| mse_label_cond_q3_mean | 0.00169  |
+| mse_loss_mean          | 0.00996  |
+| mse_loss_q0_mean       | 0.00826  |
+| mse_loss_q1_mean       | 0.0117   |
+| mse_loss_q2_mean       | 0.00939  |
+| mse_loss_q3_mean       | 0.0103   |
+| samples                | 1.45e+03 |
+| step                   | 1.45e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00332  |
+| mse_label_cond_q0_mean | 0.0028   |
+| mse_label_cond_q2_mean | 0.00432  |
+| mse_label_cond_q3_mean | 0.00353  |
+| mse_loss_mean          | 0.00955  |
+| mse_loss_q0_mean       | 0.00954  |
+| mse_loss_q2_mean       | 0.00938  |
+| mse_loss_q3_mean       | 0.0097   |
+| samples                | 1.46e+03 |
+| step                   | 1.46e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00391  |
+| mse_label_cond_q0_mean | 0.0086   |
+| mse_label_cond_q1_mean | 0.00294  |
+| mse_label_cond_q2_mean | 0.00451  |
+| mse_label_cond_q3_mean | 0.00273  |
+| mse_loss_mean          | 0.0108   |
+| mse_loss_q0_mean       | 0.0158   |
+| mse_loss_q1_mean       | 0.00893  |
+| mse_loss_q2_mean       | 0.00951  |
+| mse_loss_q3_mean       | 0.0123   |
+| samples                | 1.47e+03 |
+| step                   | 1.47e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00439  |
+| mse_label_cond_q0_mean | 0.00519  |
+| mse_label_cond_q1_mean | 0.00445  |
+| mse_label_cond_q3_mean | 0.00352  |
+| mse_loss_mean          | 0.0108   |
+| mse_loss_q0_mean       | 0.01     |
+| mse_loss_q1_mean       | 0.0111   |
+| mse_loss_q3_mean       | 0.0112   |
+| samples                | 1.48e+03 |
+| step                   | 1.48e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00432  |
+| mse_label_cond_q0_mean | 0.00406  |
+| mse_label_cond_q1_mean | 0.01     |
+| mse_label_cond_q2_mean | 0.00243  |
+| mse_label_cond_q3_mean | 0.00404  |
+| mse_loss_mean          | 0.0112   |
+| mse_loss_q0_mean       | 0.0103   |
+| mse_loss_q1_mean       | 0.0165   |
+| mse_loss_q2_mean       | 0.0106   |
+| mse_loss_q3_mean       | 0.0106   |
+| samples                | 1.49e+03 |
+| step                   | 1.49e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00428  |
+| mse_label_cond_q0_mean | 0.00434  |
+| mse_label_cond_q1_mean | 0.00559  |
+| mse_label_cond_q3_mean | 0.00397  |
+| mse_loss_mean          | 0.0112   |
+| mse_loss_q0_mean       | 0.0107   |
+| mse_loss_q1_mean       | 0.0123   |
+| mse_loss_q3_mean       | 0.0114   |
+| samples                | 1.5e+03  |
+| step                   | 1.5e+03  |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00369  |
+| mse_label_cond_q0_mean | 0.00323  |
+| mse_label_cond_q1_mean | 0.00497  |
+| mse_label_cond_q2_mean | 0.00378  |
+| mse_loss_mean          | 0.0103   |
+| mse_loss_q0_mean       | 0.0107   |
+| mse_loss_q1_mean       | 0.0113   |
+| mse_loss_q2_mean       | 0.00826  |
+| samples                | 1.51e+03 |
+| step                   | 1.51e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00403  |
+| mse_label_cond_q0_mean | 0.00241  |
+| mse_label_cond_q1_mean | 0.00534  |
+| mse_label_cond_q2_mean | 0.0018   |
+| mse_label_cond_q3_mean | 0.00401  |
+| mse_loss_mean          | 0.0116   |
+| mse_loss_q0_mean       | 0.0118   |
+| mse_loss_q1_mean       | 0.0112   |
+| mse_loss_q2_mean       | 0.01     |
+| mse_loss_q3_mean       | 0.0121   |
+| samples                | 1.52e+03 |
+| step                   | 1.52e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00327  |
+| mse_label_cond_q0_mean | 0.0034   |
+| mse_label_cond_q1_mean | 0.00294  |
+| mse_label_cond_q2_mean | 0.00324  |
+| mse_label_cond_q3_mean | 0.00337  |
+| mse_loss_mean          | 0.0102   |
+| mse_loss_q0_mean       | 0.00817  |
+| mse_loss_q1_mean       | 0.0104   |
+| mse_loss_q2_mean       | 0.0106   |
+| mse_loss_q3_mean       | 0.011    |
+| samples                | 1.53e+03 |
+| step                   | 1.53e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.0032   |
+| mse_label_cond_q0_mean | 0.0037   |
+| mse_label_cond_q1_mean | 0.00295  |
+| mse_label_cond_q2_mean | 0.00143  |
+| mse_label_cond_q3_mean | 0.00399  |
+| mse_loss_mean          | 0.0102   |
+| mse_loss_q0_mean       | 0.0106   |
+| mse_loss_q1_mean       | 0.00899  |
+| mse_loss_q2_mean       | 0.0119   |
+| mse_loss_q3_mean       | 0.0115   |
+| samples                | 1.54e+03 |
+| step                   | 1.54e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00406  |
+| mse_label_cond_q0_mean | 0.00381  |
+| mse_label_cond_q1_mean | 0.00603  |
+| mse_label_cond_q2_mean | 0.00395  |
+| mse_label_cond_q3_mean | 0.00386  |
+| mse_loss_mean          | 0.011    |
+| mse_loss_q0_mean       | 0.0102   |
+| mse_loss_q1_mean       | 0.012    |
+| mse_loss_q2_mean       | 0.00948  |
+| mse_loss_q3_mean       | 0.0126   |
+| samples                | 1.55e+03 |
+| step                   | 1.55e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00477  |
+| mse_label_cond_q0_mean | 0.00289  |
+| mse_label_cond_q1_mean | 0.00375  |
+| mse_label_cond_q2_mean | 0.00596  |
+| mse_label_cond_q3_mean | 0.00705  |
+| mse_loss_mean          | 0.0118   |
+| mse_loss_q0_mean       | 0.015    |
+| mse_loss_q1_mean       | 0.00972  |
+| mse_loss_q2_mean       | 0.0116   |
+| mse_loss_q3_mean       | 0.0156   |
+| samples                | 1.56e+03 |
+| step                   | 1.56e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00512  |
+| mse_label_cond_q0_mean | 0.00518  |
+| mse_label_cond_q2_mean | 0.00488  |
+| mse_label_cond_q3_mean | 0.00517  |
+| mse_loss_mean          | 0.0108   |
+| mse_loss_q0_mean       | 0.00986  |
+| mse_loss_q2_mean       | 0.0104   |
+| mse_loss_q3_mean       | 0.0121   |
+| samples                | 1.57e+03 |
+| step                   | 1.57e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00381  |
+| mse_label_cond_q0_mean | 0.00419  |
+| mse_label_cond_q2_mean | 0.00355  |
+| mse_label_cond_q3_mean | 0.00373  |
+| mse_loss_mean          | 0.0102   |
+| mse_loss_q0_mean       | 0.00932  |
+| mse_loss_q2_mean       | 0.0108   |
+| mse_loss_q3_mean       | 0.0105   |
+| samples                | 1.58e+03 |
+| step                   | 1.58e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00398  |
+| mse_label_cond_q1_mean | 0.00465  |
+| mse_label_cond_q2_mean | 0.0025   |
+| mse_label_cond_q3_mean | 0.00425  |
+| mse_loss_mean          | 0.0111   |
+| mse_loss_q1_mean       | 0.0104   |
+| mse_loss_q2_mean       | 0.00978  |
+| mse_loss_q3_mean       | 0.0118   |
+| samples                | 1.59e+03 |
+| step                   | 1.59e+03 |
+-------------------------------------
+-------------------------------------
+| mse_label_cond_mean    | 0.00405  |
+| mse_label_cond_q0_mean | 0.00414  |
+| mse_label_cond_q1_mean | 0.00368  |
+| mse_label_cond_q2_mean | 0.00355  |
+| mse_label_cond_q3_mean | 0.00429  |
+| mse_loss_mean          | 0.0113   |
+| mse_loss_q0_mean       | 0.0109   |
+| mse_loss_q1_mean       | 0.0102   |
+| mse_loss_q2_mean       | 0.0115   |
+| mse_loss_q3_mean       | 0.0121   |
+| samples                | 1.6e+03  |
+| step                   | 1.6e+03  |
+-------------------------------------

@@ -18,7 +18,7 @@ from scipy.interpolate import interp1d
 from torch.nn.functional import interpolate
 #from diffusers import DPMSolverSinglestepScheduler, DPMSolverMultistepScheduler # diffusers need to be installed
 
-from ml.models.wdm.DWT.DWT_IDWT_layer import DWT_3D, IDWT_3D
+from ..DWT.DWT_IDWT_layer import DWT_3D, IDWT_3D
 
 dwt = DWT_3D('haar')
 idwt = IDWT_3D('haar')

@@ -250,3 +250,8 @@ class Resize3D(Module):
         optimal_size = tuple(nearest_multiple_of_ensure(dim, ensure) for dim in scaled_size)
 
         return optimal_size
+    
+class MaskTransform(Module):
+
+    def forward(self, tensor):
+        return torch.where(tensor != 0, torch.tensor(1), tensor)
