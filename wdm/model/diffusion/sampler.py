@@ -4,6 +4,13 @@ import numpy as np
 import torch as th
 import torch.distributed as dist
 
+"""
+The forward process applies Gaussian noise to a sample at different time steps  t , and the model learns to predict the noise added at each step. 
+However, not all time steps contribute equally to model learning:
+	•	Small  t  (near the original data): Less noise, easier denoising.
+	•	Large  t  (near pure noise): More noise, harder denoising.
+A naïve uniform sampling of time steps might not be optimal because some time steps contribute more to training stability and efficiency.
+"""
 
 def create_named_schedule_sampler(name, diffusion, maxt):
     """

@@ -1,5 +1,7 @@
 import os
 import logging
+import glob
+import pickle
 from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.utilities import rank_zero_only
@@ -11,11 +13,16 @@ class Session:
 
     def __init__(self, name: str, config: DictConfig):
         self.session_identifier = get_timestamp()
-        self.working_directory = os.path.join(config.train_config.base_dir, f"{name}_exec_{self.session_identifier}")
+        self.base_dir = config.train_config.base_dir
+        self.working_directory = os.path.join(self.base_dir, f"{name}_exec_{self.session_identifier}")
         self.config = config
         self.name = name
 
         os.makedirs(self.working_directory, exist_ok=True)
+
+    def save(self):
+        with open(os.path.join(self.working_directory, "session.pkl"), 'wb') as f:
+            pickle.dump(self, f)
 
     @property
     def log_dir(self):
@@ -51,6 +58,53 @@ class Session:
     
     def is_slurm(self):
         return 'SLURM_JOB_ID' in os.environ
+    
+def restore_session(session_path: str) -> Session:
+    with open(session_path, 'rb') as f:
+        return pickle.load(f)
+    
+def get_session_from_checkpoint(checkpoint_path: str) -> str:
+    assert os.path.exists(checkpoint_path)
+    session_path = os.path.dirname(os.path.dirname(checkpoint_path)) # traverse 2 levels
+    return os.path.join(session_path, "session.pkl")
+
+def find_latest_ckpt(checkpoint_folder):
+    files = glob.glob(os.path.join(checkpoint_folder, f"*.ckpt"))
+    latest_path = None
+    latest_mod_time = -1
+    for path in files:
+        try:
+            mod_time = os.path.getmtime(path)  # Get the modification time
+            if mod_time > latest_mod_time:
+                latest_mod_time = mod_time
+                latest_path = path
+        except FileNotFoundError:
+            continue  # Skip paths that don't exist or cannot be accessed
+
+    return latest_path
+
+def find_latest_checkpoint(execution_folder: str, name: str) -> str:
+    files = glob.glob(os.path.join(execution_folder, f"{name}_exec_*"))
+    latest_path = None
+    latest_timestamp = -1
+    for path in files:
+        # Split the path by underscore
+        parts = path.split('_')
+        # Ensure the timestamp is valid
+        try:
+            timestamp = int(parts[-1])  # Last part is the timestamp
+            if timestamp > latest_timestamp:
+                expected_path = os.path.join(path, "checkpoints")
+                if os.path.exists(expected_path):
+                    ckpt_path = find_latest_ckpt(expected_path)
+                    if ckpt_path is not None:
+                        latest_path = ckpt_path
+                        latest_timestamp = timestamp
+        except ValueError:
+            continue  # Skip paths with invalid timestamps
+
+    return latest_path
+
 
 class RankZeroLogger(logging.Logger):
     """Logger that only logs messages on rank 0 in distributed training."""
@@ -108,6 +162,7 @@ class AdvancedWandLogger(WandbLogger):
                  project: str = None,
                  version = None, 
                  offline = False,
+                 log_model = False,
                  **kwargs):
         
         name = f"{model._get_name()}#{session.session_identifier}"
@@ -115,7 +170,7 @@ class AdvancedWandLogger(WandbLogger):
         if project is None:
             project = f"{model._get_name()}_project"
         
-        super().__init__(name, save_dir, version, offline, None, None, None, project, "all", None, None, None, **kwargs)
+        super().__init__(name, save_dir, version, offline, None, None, None, project, log_model, None, None, None, **kwargs)
 
 class AdvancedModelCheckpoint(ModelCheckpoint):
 
@@ -133,7 +188,7 @@ class AdvancedModelCheckpoint(ModelCheckpoint):
                  enable_version_counter = True):
         
         dirpath = session.ckpt_dir
-        filename = f"{filename_suffix}_" + "{epoch:02d}-{val_loss:.4f}"
+        filename = f"{filename_suffix}_" + f"{{epoch:02d}}-{{{monitor}:.4f}}"
         
         super().__init__(dirpath, 
                          filename, 

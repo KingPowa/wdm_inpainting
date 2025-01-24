@@ -20,7 +20,14 @@ def diffusion_defaults():
         in_channels=8,
     )
 
-def model_and_diffusion_defaults(modif: dict = {}):
+def register_diffusion_arguments(config_diffusion):
+    arguments = diffusion_defaults()
+    for key, val in config_diffusion.items():
+        if key in arguments:
+            arguments[key] = val
+    return arguments
+
+def model_defaults():
     """
     Defaults for image training.
     """
@@ -37,7 +44,6 @@ def model_and_diffusion_defaults(modif: dict = {}):
         use_checkpoint=False,
         use_scale_shift_norm=True,
         resblock_updown=True,
-        use_fp16=False,
         use_new_attention_order=False,
         dims=3,
         num_groups=32,
@@ -46,14 +52,27 @@ def model_and_diffusion_defaults(modif: dict = {}):
         bottleneck_attention=True,
         resample_2d=True,
         additive_skips=False,
-        mode='default',
         predict_xstart=False,
         use_conditional_model=None
     )
-    res.update(diffusion_defaults())
-    for key in modif:
-        res[key] = modif[key]
     return res
+
+def register_model_arguments(config_model):
+    arguments = model_defaults()
+    for key, val in config_model.items():
+        if key in arguments:
+            arguments[key] = val
+    return arguments
+
+def model_and_diffusion_defaults(config_diff: dict,
+                                 config_model: dict,
+                                 config_common: dict):
+    conf = register_diffusion_arguments(config_diff)
+    conf.update(register_model_arguments(config_model))
+    for key in config_common:
+        if key in conf:
+            conf[key] = config_common[key]
+    return conf
 
 def create_model_and_diffusion(
     image_size,
@@ -76,7 +95,6 @@ def create_model_and_diffusion(
     use_checkpoint,
     use_scale_shift_norm,
     resblock_updown,
-    use_fp16,
     use_new_attention_order,
     dims,
     num_groups,
@@ -85,7 +103,6 @@ def create_model_and_diffusion(
     bottleneck_attention,
     resample_2d,
     additive_skips,
-    mode,
     use_conditional_model,
 ):
     model = create_model(
@@ -102,7 +119,6 @@ def create_model_and_diffusion(
         use_scale_shift_norm=use_scale_shift_norm,
         dropout=dropout,
         resblock_updown=resblock_updown,
-        use_fp16=use_fp16,
         use_new_attention_order=use_new_attention_order,
         dims=dims,
         num_groups=num_groups,
@@ -123,7 +139,6 @@ def create_model_and_diffusion(
         rescale_timesteps=rescale_timesteps,
         rescale_learned_sigmas=rescale_learned_sigmas,
         timestep_respacing=timestep_respacing,
-        mode=mode,
     )
     return model, diffusion
 
@@ -142,7 +157,6 @@ def create_model(
     use_scale_shift_norm=False,
     dropout=0,
     resblock_updown=True,
-    use_fp16=False,
     use_new_attention_order=False,
     num_groups=32,
     dims=2,
@@ -167,14 +181,16 @@ def create_model(
         if isinstance(channel_mult, str):
             from ast import literal_eval
             channel_mult = literal_eval(channel_mult)
-        elif isinstance(channel_mult, tuple):  # do nothing
+        elif isinstance(channel_mult, tuple) or isinstance(channel_mult, list):  # do nothing
             pass
         else:
             raise ValueError(f"[MODEL] Value for {channel_mult=} not supported")
 
     attention_ds = []
     if attention_resolutions:
-        for res in attention_resolutions.split(","):
+        if isinstance(attention_resolutions, str):
+            attention_resolutions = attention_resolutions.split(",")
+        for res in attention_resolutions:
             attention_ds.append(image_size // int(res))
     if out_channels == 0:
         out_channels = (2*in_channels if learn_sigma else in_channels)
@@ -190,7 +206,6 @@ def create_model(
             channel_mult=channel_mult,
             num_classes=None,
             use_checkpoint=use_checkpoint,
-            use_fp16=use_fp16,
             num_heads=num_heads,
             num_head_channels=num_head_channels,
             num_heads_upsample=num_heads_upsample,

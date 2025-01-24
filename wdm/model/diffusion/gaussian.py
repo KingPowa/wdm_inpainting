@@ -13,6 +13,7 @@ import numpy as np
 import nibabel as nib
 import torch as th
 from ..utils.nn_utils import mean_flat
+from .noise import Noise, NormalNoise
 from ..loss import normal_kl, discretized_gaussian_log_likelihood
 from scipy.interpolate import interp1d
 from torch.nn.functional import interpolate
@@ -1685,7 +1686,15 @@ class GaussianDiffusion:
         return torch.tensor([[loss]])
 
 
-    def training_losses(self, model,  x_start, t, classifier=None, model_kwargs=None, noise=None, labels=None, label_cond=None, label_cond_dilated=None, use_conditional_model=None,
+    def training_losses(self, 
+                        model,  
+                        x_start, 
+                        t, 
+                        mask,
+                        model_kwargs=None, 
+                        noise_generator: Noise = NormalNoise(),
+                        noise=None,
+                        use_conditional_model=None,
                         mode=None):
         """
         Compute training losses for a single timestep.
@@ -1705,30 +1714,25 @@ class GaussianDiffusion:
 
         if model_kwargs is None:
             model_kwargs = {}
+        if noise_generator is None:
+            noise_generator = NormalNoise()
 
         # Wavelet transform the input image
         LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(x_start)
         x_start_dwt = th.cat([LLL / 3., LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)
 
-        if mode=='Default' or mode=="Conditional_always_known" or mode=="Conditional_default" or mode=="Conditional_always_known_only_healthy" or mode=="Conditional_always_known_only_healthy_only_roi" or mode=="Conditional_always_known_only_healthy_stats_roi":
-            if label_cond != None:
-                assert x_start.shape == label_cond.shape
-                noise = th.randn_like(x_start) * label_cond
-                LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(label_cond)
-                label_cond_dwt = th.cat([LLL / 3., LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)
-            else:
-                noise = th.randn_like(x_start)  # Sample noise - original image resolution.
-                label_cond_dwt = None
+        # We put the noise just on the patch
+        assert x_start.shape == mask.shape
+        noise = noise_generator(x_start) * mask
+        LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(mask)
+        mask_cond_dwt = th.cat([LLL / 3., LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)
 
-            LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(noise)
-            noise_dwt = th.cat([LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)  # Wavelet transformed noise
-            
-            x_t = self.q_sample(x_start_dwt, t, noise=noise_dwt)  # Sample x_t
-            
-        else:
-            raise ValueError(f'Invalid mode {mode=}, needs to be "Default" or "Conditional_always_known" or "Conditional_default" or "Conditional_always_known_only_healthy" or "Conditional_always_known_only_healthy_only_roi" or "Conditional_always_known_only_healthy_stats_roi"')
+        LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(noise)
+        noise_dwt = th.cat([LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)  # Wavelet transformed noise
 
-        model_output = model(x_t, self._scale_timesteps(t), label_cond_dwt=label_cond_dwt, **model_kwargs)  # Model outputs denoised wavelet subbands
+        x_t = self.q_sample(x_start_dwt, t, noise=noise_dwt)
+
+        model_output = model(x_t, self._scale_timesteps(t), label_cond_dwt=mask_cond_dwt, **model_kwargs)
 
         # Inverse wavelet transform the model output
         B, _, H, W, D = model_output.size()
@@ -1740,43 +1744,12 @@ class GaussianDiffusion:
                                  model_output[:, 5, :, :, :].view(B, 1, H, W, D),
                                  model_output[:, 6, :, :, :].view(B, 1, H, W, D),
                                  model_output[:, 7, :, :, :].view(B, 1, H, W, D))
-
-        if mode=="Default":
-            terms = {"mse_wav": th.mean(mean_flat((x_start_dwt - model_output) ** 2), dim=0)}
-
-        elif mode=="Conditional_always_known" or mode=="Conditional_default" or mode=="Conditional_always_known_only_healthy":
-            # Computes the MSE only of the ROI voxels and dilation 
-            # label_cond_dilated has 5 dimentions [B,1,D,H,W]
-            if label_cond_dilated is not None:
-                # Using dilated mask
-                real_tumour = torch.where(label_cond_dilated, x_start_dwt, torch.zeros_like(x_start_dwt))
-                fake_tumour = torch.where(label_cond_dilated, model_output, torch.zeros_like(model_output)) 
-                label_cond_loss = th.mean(mean_flat((real_tumour - fake_tumour) ** 2), dim=0)
-                terms = {"mse_wav": th.mean(mean_flat((x_start_dwt - model_output) ** 2), dim=0), "mse_label_cond": label_cond_loss}
-            else:
-                # This is using the full resolution loss
-                real_tumour = label_cond * x_start # using the full resolution images to compute the ROI loss
-                fake_tumour = label_cond * model_output_idwt 
-                label_cond_loss = th.mean(mean_flat((real_tumour - fake_tumour) ** 2), dim=0)
-                terms = {"mse_loss": th.mean(mean_flat((x_start - model_output_idwt) ** 2), dim=0), "mse_label_cond": label_cond_loss} # Using full resolution volumes to compute loss
-        elif mode=="Conditional_always_known_only_healthy_only_roi":
-            real_tumour = label_cond * x_start # using the full resolution images to compute the ROI loss
-            fake_tumour = label_cond * model_output_idwt 
-            label_cond_loss = th.mean(mean_flat((real_tumour - fake_tumour) ** 2), dim=0)
-            terms = {"mse_label_cond": label_cond_loss} # Using full resolution volumes to compute loss
-        elif mode=="Conditional_always_known_only_healthy_stats_roi":
-            real_tumour = label_cond * x_start # using the full resolution images to compute the ROI loss
-            fake_tumour = label_cond * model_output_idwt 
-            label_cond_loss = th.mean(mean_flat((real_tumour - fake_tumour) ** 2), dim=0)
-            stats_loss = self.local_intensity_stats_loss_inpainted(model_output_idwt, x_start, mask=label_cond, kernel_size=3)
-            stats_loss = stats_loss.to(x_start.device)
-            terms = {"mse_loss": th.mean(mean_flat((x_start - model_output_idwt) ** 2), dim=0), "mse_label_cond": label_cond_loss, "stats_loss": stats_loss} # Using full resolution volumes to compute loss
-        else:
-            print(f"MODE: {mode}")
-            raise ValueError(f'Invalid mode {mode}, needs to be "Default" or "Conditional_always_known" or "Conditional_default" or "Conditional_always_known_only_healthy", or "Conditional_always_known_only_healthy_only_roi", or "Conditional_always_known_only_healthy_stats_roi"')
-
-            
-
+        
+        real_inpainted = mask * x_start
+        predicted_inpainted = mask * model_output_idwt
+        label_cond_loss = th.mean(mean_flat((real_inpainted - predicted_inpainted) ** 2), dim=0)
+        terms = {"mse_loss": th.mean(mean_flat((x_start - model_output_idwt) ** 2), dim=0), "mse_label_cond": label_cond_loss}
+        
         return terms, model_output, model_output_idwt
 
 

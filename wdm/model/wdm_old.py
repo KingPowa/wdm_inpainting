@@ -7,11 +7,9 @@ import torch.utils.tensorboard
 from torch.optim import AdamW
 from pytorch_lightning import LightningModule
 
-from ..utils.logging_tools import Session
 from .logger import *
 from .diffusion.diffproc import SpacedDiffusion
 from .diffusion.sampler import LossAwareSampler, UniformSampler, ScheduleSampler
-from .diffusion.noise import Noise, NormalNoise
 
 NAMES = ["LLL", "LLH", "LHL", "LHH", "HLL", "HLH", "HHL", "HHH"]
 INITIAL_LOG_LOSS_SCALE = 20.0
@@ -22,7 +20,6 @@ class WDM(LightningModule):
         self,
         *,
         model: torch.nn.Module,
-        session: Session,
         diffusion: SpacedDiffusion,
         batch_size: int,
         in_channels: int,
@@ -32,17 +29,18 @@ class WDM(LightningModule):
         log_interval: int,
         schedule_sampler : ScheduleSampler = None,
         weight_decay: float = 0.0,
-        mask_weight: float = 10,
-        noise_generator: Noise = NormalNoise()
+        mode : str = 'default',
+        use_label_cond : bool = None,
+        use_label_cond_dilated: bool = None,
+        label_cond_weight : float | str = None,
     ):
         
         super(WDM, self).__init__()
 
-        self.save_hyperparameters(ignore=["model"])
-
-        configure(dir=session.log_dir)
+        self.save_hyperparameters(ignore=['model'])
         
-        # This is the training modality
+        # This is the training modalityf
+        self.mode = mode
         self.model = model
         self.diffusion = diffusion
 
@@ -76,8 +74,6 @@ class WDM(LightningModule):
 
         self.schedule_sampler = schedule_sampler or UniformSampler(diffusion)
         self.weight_decay = weight_decay
-        self.noise_generator = noise_generator
-        self.mask_weight = mask_weight
 
         # How much you train. Honestly they set it to 0 so no clue.
         # Anyway we automatise this as the "epochs" on PL trainer
@@ -88,33 +84,38 @@ class WDM(LightningModule):
         if not th.cuda.is_available():
             warn("Training requires CUDA.")
 
+        ## New arguments ##
+        self.use_label_cond = use_label_cond
+        self.use_label_cond_dilated = use_label_cond_dilated
+        self.label_cond_weight = label_cond_weight
+
         self.automatic_optimization = False
+
         self.t = time.time()
 
     @property
     def global_batch(self):
         return self.batch_size * self.trainer.world_size
-    
-    @property
-    def timestep(self):
-        tmp = self.t if self.t is not None else time.time()
-        self.t = time.time()
-        return tmp
 
     def configure_optimizers(self):
         opt = AdamW(self.model.parameters(), lr=self.lr, weight_decay=self.weight_decay)
         return opt
     
     def training_step(self, batch, batch_idx):
-        t_load = time.time() - self.timestep # Set time
+        t_total = time.time() - self.t # Set time
+        self.t = time.time()
+        image, mask, cond = batch # Unpack batch img, mask, conditions
 
-        lossmse, sample, sample_idwt = self._step(batch, self.noise_generator) # Step single batch
+        t_fwd = time.time()
+        t_load = t_fwd - self.t # Load time
 
-        t_fwd = time.time() - self.timestep
+        lossmse, sample, sample_idwt = self._step(image, cond, label_cond=mask, label_cond_dilated=None) # Step single batch
+
+        t_fwd = time.time()-t_fwd
 
         self.log('time/load', t_load, on_step=True)
         self.log('time/forward', t_fwd, on_step=True)
-        self.log('time/total', t_load + t_load, on_step=True)
+        self.log('time/total', t_total, on_step=True)
         self.log('loss/MSE', lossmse.detach().item(), on_step=True)
 
         if self.global_step % self.img_log_interval == 0:
@@ -134,10 +135,10 @@ class WDM(LightningModule):
 
         return lossmse
 
-    def _step(self, batch, noise_generator=None):
+    def _step(self, image, cond, label=None, label_cond=None, label_cond_dilated=None):
         info = dict()
         
-        lossmse, sample, sample_idwt = self.forward_backward(batch, noise_generator)
+        lossmse, sample, sample_idwt = self.forward_backward(image, cond, label, label_cond=label_cond, label_cond_dilated=label_cond_dilated)
         
         # compute norms
         with torch.no_grad():
@@ -148,10 +149,10 @@ class WDM(LightningModule):
 
         if not torch.isfinite(lossmse): #infinite
             if not torch.isfinite(torch.tensor(param_max_norm)):
-                error(f"model parameters contain non-finite value {param_max_norm}, entering breakpoint", level=ERROR)
+                error(f"Model parameters contain non-finite value {param_max_norm}, entering breakpoint", level=ERROR)
                 breakpoint()
             else:
-                warn(f"model parameters are finite, but loss is not: {lossmse.detach()}"
+                warn(f"Model parameters are finite, but loss is not: {lossmse.detach()}"
                            "\n -> update will be skipped in grad_scaler.step()", level=WARN)
 
         opt = self.optimizers()
@@ -161,24 +162,32 @@ class WDM(LightningModule):
         self.log_step()
         return lossmse, sample, sample_idwt            
 
-    def forward_backward(self, batch, noise_generator=None):
+    def forward_backward(self, batch, cond, label=None, label_cond=None, label_cond_dilated=None):
         for p in self.model.parameters():  # Zero out gradient
             p.grad = None
 
         # That's the "miniloop"
         # Basically they divide the batches in more little batches...
-        for i in range(0, batch[0].shape[0], self.microbatch):
-            micro = (batch_elem[i: i + self.microbatch] for batch_elem in batch)
-            img, mask, cond = micro
+        for i in range(0, batch.shape[0], self.microbatch):
+            micro = batch[i: i + self.microbatch]
 
-            t, weights = self.schedule_sampler.sample(img.shape[0], self.device) # Sample schedule sampler
+            if label is not None:
+                micro_label = label[i: i + self.microbatch]
+            else:
+                micro_label = None
+
+            micro_cond = None
+
+            t, weights = self.schedule_sampler.sample(micro.shape[0], self.device) # Sample schedule sampler
 
             diffusion_loss = self.diffusion.training_losses(self.model,
-                                               x_start=img,
+                                               x_start=micro,
                                                t=t,
-                                               model_kwargs=None,
-                                               mask=mask,
-                                               noise_generator=noise_generator)
+                                               model_kwargs=micro_cond,
+                                               labels=micro_label,
+                                               label_cond=label_cond,
+                                               label_cond_dilated=label_cond_dilated,
+                                               mode=self.mode)
 
             if isinstance(self.schedule_sampler, LossAwareSampler):
                 self.schedule_sampler.update_with_local_losses(
@@ -193,26 +202,32 @@ class WDM(LightningModule):
                 # Log wavelet level loss
                 self.log_wav_loss_prop("mse_wav", losses)
 
-                if float(self.mask_weight)!=0:
+                if float(self.label_cond_weight)!=0:
                     # Add the mse_label_cond
                     self.log_wav_loss_prop("mse_label_cond", losses)
                     
-                    loss = (losses["mse_wav"]).mean() + (int(self.mask_weight)*(losses["mse_label_cond"].mean()))
+                    loss = (losses["mse_wav"]).mean() + (int(self.label_cond_weight)*(losses["mse_label_cond"].mean()))
                 else:
                     # weights = th.ones(len(losses["mse_wav"])).cuda()  # Equally weight all wavelet channel losses 
                     loss = (losses["mse_wav"]).mean()
 
             elif "mse_loss" in losses:
                 self.log('loss/mse_loss', losses["mse_loss"][0].item(), on_step=True)
-                if float(self.mask_weight)!=0:
-                    loss = (losses["mse_loss"]).mean() + (int(self.mask_weight)*(losses["mse_label_cond"].mean()))
-                    # Add the mse_label_cond
-                    self.log('loss/mse_label_cond', losses["mse_label_cond"][0].item(),
-                                                on_step=True)
-                else:
-                    loss = (losses["mse_loss"]).mean() 
+                if self.mode=="Conditional_always_known_only_healthy_stats_roi":
+                    self.log('loss/stats_loss', losses["stats_loss"][0].item(), on_step=True)
+                    self.log('loss/mse_label_cond', losses["mse_label_cond"][0].item(), on_step=True)
+
+                    loss = (losses["mse_loss"]).mean() + losses["mse_label_cond"].mean() + losses["stats_loss"].mean()
+                else: 
+                    if float(self.label_cond_weight)!=0:
+                        loss = (losses["mse_loss"]).mean() + (int(self.label_cond_weight)*(losses["mse_label_cond"].mean()))
+                        # Add the mse_label_cond
+                        self.log('loss/mse_label_cond', losses["mse_label_cond"][0].item(),
+                                                    on_step=True)
+                    else:
+                        loss = (losses["mse_loss"]).mean() 
             else:
-                loss = (int(self.mask_weight)*(losses["mse_label_cond"].mean()))
+                loss = (int(self.label_cond_weight)*(losses["mse_label_cond"].mean()))
                 # Add the mse_label_cond
                 self.log('loss/mse_label_cond', losses["mse_label_cond"][0].item(),
                                             on_step=True)
@@ -226,6 +241,14 @@ class WDM(LightningModule):
             self.log_loss_dict(t, {k: v * weights for k, v in losses.items()})
 
             return loss, sample, sample_idwt
+
+    # def _anneal_lr(self):
+    #     if not self.lr_anneal_steps:
+    #         return
+    #     frac_done = (self.step + self.resume_step) / self.lr_anneal_steps
+    #     lr = self.lr * (1 - frac_done)
+    #     for param_group in self.opt.param_groups:
+    #         param_group["lr"] = lr
     
     def log_wav_loss_prop(self, prop, losses: dict[str, torch.Tensor]):
         for i,val in enumerate([name.lower() for name in NAMES]):
