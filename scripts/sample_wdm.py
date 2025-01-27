@@ -17,14 +17,14 @@ from pytorch_lightning.callbacks import EarlyStopping
 
 from wdm.utils.masking import DirectorySampler
 from wdm.configuration.mask import PresampledMaskConfig
-from wdm.utils.transforms import Resize3D, MaskTransform
+from wdm.utils.transforms import Resize3D, MaskTransform, QuantileAndNormalize
 from wdm.utils.logging_tools import setup_logger, Session, AdvancedModelCheckpoint, AdvancedWandLogger, restore_session, find_latest_checkpoint, get_session_from_checkpoint
 from wdm.datasets.utils import instantiate_datasets
 from wdm.dataloaders.inpainting import MRIInpaintDataLoader
 
 from wdm.model.wdm import WDM
 from wdm.model.diffusion.sampler import create_named_schedule_sampler
-from wdm.model.utils.etc import create_model_and_diffusion, model_and_diffusion_defaults
+from wdm.model.utils.etc import create_model_and_diffusion, model_and_diffusion_defaults, create_gaussian_diffusion
 
 from wdm.model.wdm import WDM
 
@@ -56,6 +56,8 @@ def train_model(name: str, config_file: str):
                                         config.model_config,
                                         config.common_config)
     model, diffusion = create_model_and_diffusion(**args)
+    args['steps'] = config.sampling_config.sampling_steps
+    sampling_diffusion = create_gaussian_diffusion(**args)
     sampler = create_named_schedule_sampler("uniform", diffusion, maxt=1000)
     # Setup Module
     logger.info(f"Declaring WDM model...")
@@ -63,15 +65,20 @@ def train_model(name: str, config_file: str):
         model=model,
         session=session,
         diffusion=diffusion,
+        sampling_diffusion=sampling_diffusion,
         batch_size=config.train_config.batch_size,
         in_channels=1,
         microbatch=-1,
         lr=config.train_config.lr,
         log_interval=10,
         img_log_interval=50,
+        val_interval=2000,
         schedule_sampler=sampler,
         weight_decay=config.train_config.weight_decay,
         mask_weight=config.train_config.mask_weight,
+        clip_denoised=config.sampling_config.clip_denoised,
+        steps_scheduler=config.sampling_config.steps_scheduler,
+        sampling_steps=config.sampling_config.sampling_steps
     )
     # Setup Training
     logger.info(f"Starting training. Number of steps: {config.diffusion_config.diffusion_steps}")
@@ -132,6 +139,8 @@ def resume_train(checkpoint_path, session_path):
                                         config.model_config,
                                         config.common_config)
     model, diffusion = create_model_and_diffusion(**args)
+    args['steps'] = config.sampling_config.sampling_steps
+    sampling_diffusion = create_gaussian_diffusion(**args)
     sampler = create_named_schedule_sampler("uniform", diffusion, maxt=1000)
     # Setup Module
     logger.info(f"Declaring WDM model...")
@@ -139,15 +148,20 @@ def resume_train(checkpoint_path, session_path):
         model=model,
         session=session,
         diffusion=diffusion,
+        sampling_diffusion=sampling_diffusion,
         batch_size=config.train_config.batch_size,
         in_channels=1,
         microbatch=-1,
         lr=config.train_config.lr,
         log_interval=10,
-        img_log_interval=20,
+        img_log_interval=50,
+        val_interval=2000,
         schedule_sampler=sampler,
         weight_decay=config.train_config.weight_decay,
         mask_weight=config.train_config.mask_weight,
+        clip_denoised=config.sampling_config.clip_denoised,
+        steps_scheduler=config.sampling_config.steps_scheduler,
+        sampling_steps=config.sampling_config.sampling_steps
     )
     # Setup Training
     logger.info(f"Starting training. Number of steps: {config.diffusion_config.diffusion_steps}")
@@ -179,8 +193,15 @@ def resume_train(checkpoint_path, session_path):
         enable_progress_bar=(not session.is_slurm()),
         precision=config.trainer_config.precision
     )
+    # tuner = Tuner(trainer)
+    # lr_finder = tuner.lr_find(model)
+    # fig = lr_finder.plot(suggest=True)
+    # fig.savefig(os.path.join(session.fig_dir, "lr_tuner.png"))
 
-    logger.info(f"Restoring checkpoint")
+    # # Update the model's learning rate
+    # new_lr = lr_finder.suggestion()
+    # model.hparams.learning_rate = new_lr
+    # logger.info(f"Using suggested LR: {new_lr}")
 
     logger.info(f"Starting trainer")
     trainer.fit(wdm, ckpt_path=checkpoint_path)

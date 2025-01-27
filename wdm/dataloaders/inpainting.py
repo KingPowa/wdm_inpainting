@@ -7,6 +7,7 @@ from .mri import MRIDataloader
 from ..datasets.file_based import MedicalDataset
 from ..datasets.mri import MRIMaskedDataset
 from ..utils.masking import MaskSampler
+from ..utils.etc import get_default_device
 
 class MRIInpaintDataLoader(MRIDataloader):
     
@@ -17,12 +18,16 @@ class MRIInpaintDataLoader(MRIDataloader):
                  seed: int = 11111,
                  num_workers: int = 15,
                  batch_size: int = 16,
-                 transforms : list[Module] = None):
+                 transforms : list[Module] = None,
+                 *args,
+                 **kwargs):
         # Now explicitly call the parent constructor with all parameters
         super(MRIInpaintDataLoader, self).__init__(dataset=dataset, 
                          age_range=age_range,
                          seed=seed,
-                         batch_size=batch_size)
+                         batch_size=batch_size,
+                         *args,
+                         **kwargs)
         self.save_hyperparameters(ignore="dataset", logger=False)
         
 

@@ -166,3 +166,6 @@ def is_iterable(the_element, cls=None):
         return False
     else:
         return True if cls is None else not isinstance(the_element, cls)
+    
+def get_default_device() -> torch.device:
+    return torch.device("cuda" if torch.cuda.is_available() else "cpu")

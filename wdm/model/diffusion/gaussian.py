@@ -20,6 +20,7 @@ from torch.nn.functional import interpolate
 #from diffusers import DPMSolverSinglestepScheduler, DPMSolverMultistepScheduler # diffusers need to be installed
 
 from ..DWT.DWT_IDWT_layer import DWT_3D, IDWT_3D
+from ..DWT.utils import convert_to_dwt, convert_to_idwt
 
 dwt = DWT_3D('haar')
 idwt = IDWT_3D('haar')
@@ -307,17 +308,8 @@ class GaussianDiffusion:
                 x = denoised_fn(x)
           
             if clip_denoised:
-            
-                B, _, H, W, D = x.size()
-                x_idwt = idwt(x[:, 0, :, :, :].view(B, 1, H, W, D) * 3.,
-                              x[:, 1, :, :, :].view(B, 1, H, W, D),
-                              x[:, 2, :, :, :].view(B, 1, H, W, D),
-                              x[:, 3, :, :, :].view(B, 1, H, W, D),
-                              x[:, 4, :, :, :].view(B, 1, H, W, D),
-                              x[:, 5, :, :, :].view(B, 1, H, W, D),
-                              x[:, 6, :, :, :].view(B, 1, H, W, D),
-                              x[:, 7, :, :, :].view(B, 1, H, W, D))
 
+                x_idwt = convert_to_idwt(x, idwt)
                 x_idwt_clamp = x_idwt.clamp(-1, 1)
 
                 LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(x_idwt_clamp)
@@ -448,13 +440,9 @@ class GaussianDiffusion:
         model,
         shape,
         time,
-        full_res_input=None,
-        noise=None,
-        label_cond_dwt=None,
-        use_conditional_model=None,
-        full_res_label_cond=None,
-        full_res_label_cond_dilated=None,
-        train_mode=None,
+        img=None,
+        mask=None,
+        noise_generator: Noise = None,
         clip_denoised=True,
         denoised_fn=None,
         cond_fn=None,
@@ -488,13 +476,9 @@ class GaussianDiffusion:
             model,
             shape,
             time=time,
-            full_res_input=full_res_input,
-            noise=noise,
-            label_cond_dwt=label_cond_dwt,
-            full_res_label_cond=full_res_label_cond,
-            full_res_label_cond_dilated=full_res_label_cond_dilated,
-            use_conditional_model=use_conditional_model,
-            train_mode=train_mode,
+            img=img,
+            mask=mask,
+            noise_generator=noise_generator,
             clip_denoised=clip_denoised,
             denoised_fn=denoised_fn,
             cond_fn=cond_fn,
@@ -511,7 +495,7 @@ class GaussianDiffusion:
             model,
             x,
             t,
-            full_res_input=None,
+            noise_generator: Noise = NormalNoise(),
             label_cond_dwt=None,
             clip_denoised=True,
             denoised_fn=None,
@@ -544,7 +528,7 @@ class GaussianDiffusion:
             denoised_fn=denoised_fn,
             model_kwargs=model_kwargs,
         )
-        noise = th.randn_like(x)
+        noise = noise_generator(x)
         nonzero_mask = (
             (t != 0).float().view(-1, *([1] * (len(x.shape) - 1)))
         )  # no noise when t == 0
@@ -650,15 +634,11 @@ class GaussianDiffusion:
     def p_sample_loop_progressive(
         self,
         model,
-        shape,
+        batch_size,
         time,
-        full_res_input=None,
-        noise=None,
-        label_cond_dwt=None,
-        full_res_label_cond=None, # No dilated
-        full_res_label_cond_dilated=None, # full_res_label_cond_dilated is dilated to create good borders (no need anymore as the copy paste is done in full resolution)
-        use_conditional_model=None,
-        train_mode=None,
+        img=None,
+        mask=None,
+        noise_generator: Noise = NormalNoise(),
         clip_denoised=True,
         denoised_fn=None,
         cond_fn=None,
@@ -679,12 +659,7 @@ class GaussianDiffusion:
 
         if device is None:
             device = next(model.parameters()).device
-        assert isinstance(shape, (tuple, list))
-        if noise is not None:
-            img = noise # this noise is already noise_dwt
-        else:
-            raise ValueError("Please define noise")
-            #img = th.randn(*shape, device=device) # Uncomment
+
         def undo(img_after_model, t):
             beta = _extract_into_tensor(self.betas, t, img_after_model.shape)
 
@@ -977,110 +952,45 @@ class GaussianDiffusion:
         else:
             print(f"Using Default time scheduler (linear, constant steps)")
             times = list(range(time))[::-1] 
+
+        print(f"Using time: {time}")
+        # Using the model trained with the label
         if progress:
             # Lazy import so that we don't depend on tqdm.
             from tqdm.auto import tqdm
             times = tqdm(times)
+        # This mode knows the region besides the region of interest, no noise is added to the known part.
+        masked_img = img * (1 - mask)
+        noise = noise_generator(img) * mask
 
-        USE_LABEL_DILATED = False
+        noisy_img = (img * mask) + noise
 
-        print(f"Using time: {time}")
-        if use_conditional_model==True:
-            # Using the model trained with the label
-            if progress:
-                # Lazy import so that we don't depend on tqdm.
-                from tqdm.auto import tqdm
-                times = tqdm(times)
+        # Let's take the entire volume, and add noise only in the label_cond region
+        img_dwt = convert_to_dwt(noisy_img, dwt)
+        mask_dwt = convert_to_dwt(mask, dwt)
             
-            if train_mode=="Conditional_default":
-                # This starts with all noise and generates the region of interest, reducing the noise evey step
-                # img is already all noise_dwt -> direct input of the model
-                pass
-            elif train_mode=="Conditional_always_known" or train_mode=="Conditional_always_known_only_healthy":
-                # This mode knows the region besides the region of interest, no noise is added to the known part.
-                remaining_volume = full_res_input * (1 - full_res_label_cond) # Region known, not ROI
+        if REPAINT: ## Didn't work well :(
+            FROM_REVERSE = False
+            for t_now, t_next in times:
+                t_now = th.tensor([t_now] * batch_size, device=device)
+                t_next = th.tensor([t_next] * batch_size, device=device)
+                if t_now.item()==-1:
+                    break
+                if t_now.item() > t_next.item():
 
-                # Let's take the entire volume, and add noise only in the label_cond region
-                noise = th.randn_like(full_res_input)  # Sample noise - original image resolution.
-                noise_on_mask = noise * full_res_label_cond
-                full_res_noisy = full_res_input*full_res_label_cond + noise_on_mask # All scan with ROI to 0 and then sum the noise in ROI.
-                LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(full_res_noisy)
-                img = th.cat([LLL / 3., LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)
-                
-            if REPAINT: ## Didn't work well :(
-                FROM_REVERSE = False
-                for t_now, t_next in times:
-                    t_now = th.tensor([t_now] * shape[0], device=device)
-                    t_next = th.tensor([t_next] * shape[0], device=device)
-                    if t_now.item()==-1:
-                        break
-                    if t_now.item() > t_next.item():
-                        if train_mode=="Conditional_default":
-                            # Adding noise to the known region for the next step (t-1)
-                            noise = th.randn_like(full_res_input)  # Sample noise - original image resolution.
-                            full_res_noisy = self.q_sample(x_start=full_res_input, t=t-1, noise=noise)
-                            remaining_volume = full_res_noisy * (1 - full_res_label_cond)
-
-                        if FROM_REVERSE:
-                            FROM_REVERSE = False
-                            generated_ROI = full_res_label_cond * img_full_res
-                            print("After reverse first iter")
-                            img = remaining_volume + generated_ROI
-                            LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(img)
-                            img = th.cat([LLL / 3., LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)
-
-                        with th.no_grad():
-                            out = self.p_sample(
-                                model,
-                                img,
-                                t_now,
-                                label_cond_dwt=label_cond_dwt,
-                                clip_denoised=clip_denoised,
-                                denoised_fn=denoised_fn,
-                                cond_fn=cond_fn,
-                                model_kwargs=model_kwargs,
-                            )
-                            yield out
-                            img = out["sample"]
-
-                        B, _, H, W, D = img.size()
-            
-                        img_idwt = idwt(img[:, 0, :, :, :].view(B, 1, H, W, D) * 3.,
-                                img[:, 1, :, :, :].view(B, 1, H, W, D),
-                                img[:, 2, :, :, :].view(B, 1, H, W, D),
-                                img[:, 3, :, :, :].view(B, 1, H, W, D),
-                                img[:, 4, :, :, :].view(B, 1, H, W, D),
-                                img[:, 5, :, :, :].view(B, 1, H, W, D),
-                                img[:, 6, :, :, :].view(B, 1, H, W, D),
-                                img[:, 7, :, :, :].view(B, 1, H, W, D))
-                        
-                        # ROI generated in this step t
-                        generated_ROI = full_res_label_cond * img_idwt
-
-                        img_full_res = remaining_volume + generated_ROI
-                        LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(img_full_res)
-                        img = th.cat([LLL / 3., LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)
-                    else:
-                        print("Reverse process")
-                        img_full_res = undo(img_after_model=img_full_res, t=t_now)
-                        FROM_REVERSE = True
-
-            else: 
-                for t in times:
-                    t = th.tensor([t] * shape[0], device=device)
-                    
-                    if train_mode=="Conditional_default":
-                        # Adding noise to the known region for the next step (t-1)
-                        noise = th.randn_like(full_res_input)  # Sample noise - original image resolution.
-                        full_res_noisy = self.q_sample(x_start=full_res_input, t=t-1, noise=noise)
-                        remaining_volume = full_res_noisy * (1 - full_res_label_cond)
+                    if FROM_REVERSE:
+                        FROM_REVERSE = False
+                        generated_ROI = mask * inpainted_image
+                        print("After reverse first iter")
+                        img = masked_img + generated_ROI
+                        img = convert_to_dwt(img, dwt)
 
                     with th.no_grad():
                         out = self.p_sample(
                             model,
-                            img,
-                            t,
-                            label_cond_dwt=label_cond_dwt,
+                            img_dwt,
+                            t_now,
+                            label_cond_dwt=mask_dwt,
                             clip_denoised=clip_denoised,
                             denoised_fn=denoised_fn,
                             cond_fn=cond_fn,
@@ -1088,211 +998,42 @@ class GaussianDiffusion:
                         )
                         yield out
                         img = out["sample"]
-
-                    B, _, H, W, D = img.size()
         
-                    img_idwt = idwt(img[:, 0, :, :, :].view(B, 1, H, W, D) * 3.,
-                            img[:, 1, :, :, :].view(B, 1, H, W, D),
-                            img[:, 2, :, :, :].view(B, 1, H, W, D),
-                            img[:, 3, :, :, :].view(B, 1, H, W, D),
-                            img[:, 4, :, :, :].view(B, 1, H, W, D),
-                            img[:, 5, :, :, :].view(B, 1, H, W, D),
-                            img[:, 6, :, :, :].view(B, 1, H, W, D),
-                            img[:, 7, :, :, :].view(B, 1, H, W, D))
+                    img_idwt = convert_to_idwt(img, idwt)
                     
                     # ROI generated in this step t
-                    generated_ROI = full_res_label_cond * img_idwt
+                    generated_ROI = mask * img_idwt
+                    inpainted_image = masked_img + generated_ROI
+                    img_dwt = convert_to_dwt(inpainted_image, dwt)
+                else:
+                    print("Reverse process")
+                    img_full_res = undo(img_after_model=img_full_res, t=t_now)
+                    FROM_REVERSE = True
 
-                    img = remaining_volume + generated_ROI
-                    LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(img)
-                    img = th.cat([LLL / 3., LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)
-      
-        else:    
-            # Using the unconditionally trained model
-            print(f"use_conditional_model: {use_conditional_model}") 
-            
-            LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(full_res_input)
-            x_start_dwt = th.cat([LLL / 3., LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)
-            
-            if REPAINT:
-                FROM_REVERSE = False
-                for t_now, t_next in times:
-                    t_now = th.tensor([t_now] * shape[0], device=device)
-                    t_next = th.tensor([t_next] * shape[0], device=device)
-                    print(t_now)
-                    if t_now.item()==-1:
-                        break
-                    if t_now.item() > t_next.item():
-                        
-                        if FROM_REVERSE:
-                            FROM_REVERSE = False
-                            generated_ROI = full_res_label_cond * img_full_res
-                            print(print("After reverse first iter"))
-                            img = remaining_volume + generated_ROI
-                            LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(img)
-                            img = th.cat([LLL / 3., LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)
+        else: 
+            for t in times:
+                t = th.tensor([t] * batch_size, device=device)
 
+                with th.no_grad():
+                    out = self.p_sample(
+                        model,
+                        img_dwt,
+                        t,
+                        label_cond_dwt=mask_dwt,
+                        clip_denoised=clip_denoised,
+                        denoised_fn=denoised_fn,
+                        cond_fn=cond_fn,
+                        model_kwargs=model_kwargs,
+                    )
+                    yield out
+                    img = out["sample"]
 
-                        if USE_LABEL_DILATED:
-                            low_label_cond = interpolate(
-                                input=full_res_label_cond_dilated, 
-                                size=None, 
-                                scale_factor=0.5, 
-                                mode='nearest-exact', # Changed from nearest. change back in case of problems !
-                                align_corners=None, 
-                                recompute_scale_factor=None, 
-                                antialias=False)
-
-                        noise = th.randn_like(full_res_input)  # Sample noise - original image resolution.
-                        
-                        # We only want the region not to inpaint (not ROI)
-                        if USE_LABEL_DILATED:
-                            # Getting the voided case with noise added at step t-1 (x_t-1 | x_0)
-                            # We want t-1 because we are in the step t where the model will predict t-1 
-                            LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(noise)
-                            noise_dwt = th.cat([LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)  # Wavelet transformed noise
-                            x_t_1_dwt = self.q_sample(x_start=x_start_dwt, t=t-1, noise=noise_dwt) # NOISED REAL IMAGE at x_t-1 (shape: 1,8,128,128,128)
-                            x_t_1_not_roi =  x_t_1_dwt * (1 - low_label_cond)
-
-                        else:
-                            x_t_1 = self.q_sample(x_start=full_res_input, t=t-1, noise=noise) 
-                            x_t_1_not_roi = x_t_1 * (1 - full_res_label_cond)
-
-                        if torch.isnan(x_t_1_not_roi).any().item():
-                            print("x_t_1_not_roi is Nan")
-
-                        # Getting denoised case -> q(x_t-1 | x_t)
-                        with th.no_grad():
-                            out = self.p_sample(
-                                model,
-                                img,
-                                t_now,
-                                label_cond_dwt=label_cond_dwt,
-                                clip_denoised=clip_denoised,
-                                denoised_fn=denoised_fn,
-                                cond_fn=cond_fn,
-                                model_kwargs=model_kwargs,
-                            )
-                            yield out # Doing like this will return the last results without replacing the non ROI region by the original input volume
-                            img = out["sample"] # PREDICTED DENOISED CASE AT x_t-1
-
-                        if torch.isnan(img).any().item():
-                            print("model out img is Nan")
-
-
-                        # We only want the inpaited region (ROI)
-                        if USE_LABEL_DILATED:
-                            img_roi =  img * low_label_cond
-                        else:
-                            B, _, H, W, D = img.size()
-                            img_idwt = idwt(img[:, 0, :, :, :].view(B, 1, H, W, D) * 3.,
-                                    img[:, 1, :, :, :].view(B, 1, H, W, D),
-                                    img[:, 2, :, :, :].view(B, 1, H, W, D),
-                                    img[:, 3, :, :, :].view(B, 1, H, W, D),
-                                    img[:, 4, :, :, :].view(B, 1, H, W, D),
-                                    img[:, 5, :, :, :].view(B, 1, H, W, D),
-                                    img[:, 6, :, :, :].view(B, 1, H, W, D),
-                                    img[:, 7, :, :, :].view(B, 1, H, W, D))
-                            
-                            img_roi =  img_idwt * full_res_label_cond
-
-                        if torch.isnan(img_roi).any().item():
-                            print("img_roi is Nan")
-
-                        img_full_res = x_t_1_not_roi + img_roi # Real not ROI + Predicted ROI 
-
-                        if torch.isnan(img).any().item():
-                            print("img2 is Nan")
-                        
-                        if not USE_LABEL_DILATED:
-                            LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(img_full_res)
-                            img = th.cat([LLL / 3., LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)
-                    
-                    else:
-                        print("Reverse process")
-                        img_full_res = undo(img_after_model=img_full_res, t=t_now)
-                        FROM_REVERSE = True
-
-            else:
-                for i in times:
-                    t = th.tensor([i] * shape[0], device=device)
-
-                    if USE_LABEL_DILATED:
-                        low_label_cond = interpolate(
-                            input=full_res_label_cond_dilated, 
-                            size=None, 
-                            scale_factor=0.5, 
-                            mode='nearest-exact', # Changed from nearest. change back in case of problems !
-                            align_corners=None, 
-                            recompute_scale_factor=None, 
-                            antialias=False)
-
-                    noise = th.randn_like(full_res_input)  # Sample noise - original image resolution.
-                    
-                    # We only want the region not to inpaint (not ROI)
-                    if USE_LABEL_DILATED:
-                        # Getting the voided case with noise added at step t-1 (x_t-1 | x_0)
-                        # We want t-1 because we are in the step t where the model will predict t-1 
-                        LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(noise)
-                        noise_dwt = th.cat([LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)  # Wavelet transformed noise
-                        x_t_1_dwt = self.q_sample(x_start=x_start_dwt, t=t-1, noise=noise_dwt) # NOISED REAL IMAGE at x_t-1 (shape: 1,8,128,128,128)
-                        x_t_1_not_roi =  x_t_1_dwt * (1 - low_label_cond)
-
-                    else:
-                        x_t_1 = self.q_sample(x_start=full_res_input, t=t-1, noise=noise) 
-                        x_t_1_not_roi = x_t_1 * (1 - full_res_label_cond)
-
-                    if torch.isnan(x_t_1_not_roi).any().item():
-                        print("x_t_1_not_roi is Nan")
-
-                    # Getting denoised case -> q(x_t-1 | x_t)
-                    with th.no_grad():
-                        out = self.p_sample(
-                            model,
-                            img,
-                            t,
-                            label_cond_dwt=label_cond_dwt,
-                            clip_denoised=clip_denoised,
-                            denoised_fn=denoised_fn,
-                            cond_fn=cond_fn,
-                            model_kwargs=model_kwargs,
-                        )
-                        yield out # Doing like this will return the last results without replacing the non ROI region by the original input volume
-                        img = out["sample"] # PREDICTED DENOISED CASE AT x_t-1
-
-                    if torch.isnan(img).any().item():
-                        print("model out img is Nan")
-
-
-                    # We only want the inpaited region (ROI)
-                    if USE_LABEL_DILATED:
-                        img_roi =  img * low_label_cond
-                    else:
-                        B, _, H, W, D = img.size()
-                        img_idwt = idwt(img[:, 0, :, :, :].view(B, 1, H, W, D) * 3.,
-                                img[:, 1, :, :, :].view(B, 1, H, W, D),
-                                img[:, 2, :, :, :].view(B, 1, H, W, D),
-                                img[:, 3, :, :, :].view(B, 1, H, W, D),
-                                img[:, 4, :, :, :].view(B, 1, H, W, D),
-                                img[:, 5, :, :, :].view(B, 1, H, W, D),
-                                img[:, 6, :, :, :].view(B, 1, H, W, D),
-                                img[:, 7, :, :, :].view(B, 1, H, W, D))
-                        
-                        img_roi =  img_idwt * full_res_label_cond
-
-                    if torch.isnan(img_roi).any().item():
-                        print("img_roi is Nan")
-
-                    img = x_t_1_not_roi + img_roi # Real not ROI + Predicted ROI 
-
-                    if torch.isnan(img).any().item():
-                        print("img2 is Nan")
-                    
-                    if not USE_LABEL_DILATED:
-                        LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(img)
-                        img = th.cat([LLL / 3., LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)
-
-
+                img_idwt = convert_to_idwt(img, idwt)
+                
+                # ROI generated in this step t
+                generated_ROI = mask * img_idwt
+                inpainted_image = masked_img + generated_ROI
+                img_dwt = convert_to_dwt(inpainted_image, dwt)
 
     def ddim_sample(
             self,
@@ -1685,7 +1426,6 @@ class GaussianDiffusion:
         loss = torch.mean((pred_mean - target_mean)**2 + (pred_var - target_var)**2)
         return torch.tensor([[loss]])
 
-
     def training_losses(self, 
                         model,  
                         x_start, 
@@ -1717,33 +1457,22 @@ class GaussianDiffusion:
         if noise_generator is None:
             noise_generator = NormalNoise()
 
-        # Wavelet transform the input image
-        LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(x_start)
-        x_start_dwt = th.cat([LLL / 3., LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)
-
-        # We put the noise just on the patch
         assert x_start.shape == mask.shape
-        noise = noise_generator(x_start) * mask
-        LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(mask)
-        mask_cond_dwt = th.cat([LLL / 3., LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)
+        x_start_masked = x_start * (1-mask)
+        noise = noise_generator(x_start_masked)
+        noise = noise * mask
 
-        LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH = dwt(noise)
-        noise_dwt = th.cat([LLL, LLH, LHL, LHH, HLL, HLH, HHL, HHH], dim=1)  # Wavelet transformed noise
+        x_start_masked_dwt = convert_to_dwt(x_start_masked, dwt)
+        noise_dwt = convert_to_dwt(noise, dwt, 1.)
 
-        x_t = self.q_sample(x_start_dwt, t, noise=noise_dwt)
+        x_t_dwt = self.q_sample(x_start_masked_dwt, t, noise=noise_dwt)
 
-        model_output = model(x_t, self._scale_timesteps(t), label_cond_dwt=mask_cond_dwt, **model_kwargs)
+        mask_cond_dwt = convert_to_dwt(mask, dwt)
+
+        model_output = model(x_t_dwt, self._scale_timesteps(t), label_cond_dwt=mask_cond_dwt, **model_kwargs)
 
         # Inverse wavelet transform the model output
-        B, _, H, W, D = model_output.size()
-        model_output_idwt = idwt(model_output[:, 0, :, :, :].view(B, 1, H, W, D) * 3.,
-                                 model_output[:, 1, :, :, :].view(B, 1, H, W, D),
-                                 model_output[:, 2, :, :, :].view(B, 1, H, W, D),
-                                 model_output[:, 3, :, :, :].view(B, 1, H, W, D),
-                                 model_output[:, 4, :, :, :].view(B, 1, H, W, D),
-                                 model_output[:, 5, :, :, :].view(B, 1, H, W, D),
-                                 model_output[:, 6, :, :, :].view(B, 1, H, W, D),
-                                 model_output[:, 7, :, :, :].view(B, 1, H, W, D))
+        model_output_idwt = convert_to_idwt(model_output, idwt)
         
         real_inpainted = mask * x_start
         predicted_inpainted = mask * model_output_idwt
@@ -1751,6 +1480,36 @@ class GaussianDiffusion:
         terms = {"mse_loss": th.mean(mean_flat((x_start - model_output_idwt) ** 2), dim=0), "mse_label_cond": label_cond_loss}
         
         return terms, model_output, model_output_idwt
+    
+    def sample_diffusion(self,
+                         model,
+                         img,
+                         mask,
+                         diffusion_steps,
+                         noise_generator: Noise = NormalNoise(),
+                         clip_denoised=True,
+                         model_kwargs=None,
+                         steps_scheduler=None,
+                         use_conditional_model=None,
+                         progress=True
+                        ):
+        
+        sample = self.p_sample_loop(
+            model=model,
+            shape=img.shape[0],
+            time=diffusion_steps,
+            img=img,
+            mask=mask,
+            noise_generator=noise_generator,
+            clip_denoised=clip_denoised,
+            steps_scheduler=steps_scheduler,
+            progress=progress,
+            model_kwargs=model_kwargs
+        )
+
+        sample = convert_to_idwt(sample, idwt)
+        
+        return sample
 
 
     def _prior_bpd(self, x_start):

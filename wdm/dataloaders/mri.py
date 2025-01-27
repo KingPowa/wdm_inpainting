@@ -7,7 +7,7 @@ from collections.abc import Iterable, Collection
 
 from ..datasets.file_based import MedicalDataset
 from ..datasets.mri import MRIDataset
-from ..utils.etc import is_iterable
+from ..utils.etc import is_iterable, get_default_device
 
 class MRIDataloader(LightningDataModule):
 
@@ -15,12 +15,15 @@ class MRIDataloader(LightningDataModule):
                  dataset: MedicalDataset | Collection[MedicalDataset],
                  age_range: Iterable[float],
                  seed: int = 11111,
-                 batch_size: int = 16):
+                 batch_size: int = 16,
+                 *args,
+                 **kwargs):
         if age_range:
             assert is_iterable(age_range) and len(age_range) >= 2
             self.age_range = age_range[:2] if age_range[0] < age_range[1] else age_range[:2:-1]
         
-        super().__init__()
+        super().__init__(*args,
+                         **kwargs)
         self.save_hyperparameters(ignore="dataset", logger=False)
 
         self.train_set = None
@@ -46,12 +49,16 @@ class MRIHoldoutDataLoader(MRIDataloader):
                  batch_size: int = 16,
                  train_holdout=0.7,
                  val_holdout=1,
-                 transforms:list[Module] = None):
+                 transforms:list[Module] = None,
+                 *args,
+                 **kwargs):
         # Now explicitly call the parent constructor with all parameters
         super().__init__(dataset=dataset, 
                          age_range=age_range, 
                          seed=seed, 
-                         batch_size=batch_size)
+                         batch_size=batch_size,
+                        *args,
+                        **kwargs)
         self.save_hyperparameters(ignore="dataset", logger=False)
         
     def setup(self, stage=None):
@@ -79,14 +86,18 @@ class MRIKFoldDataLoader(MRIDataloader):
                  num_workers: int = 15,
                  batch_size: int = 16,
                  k = 0,
-                 folds = 10):
+                 folds = 10,
+                 *args,
+                 **kwargs):
         
         # Now explicitly call the parent constructor with all parameters
         super().__init__(dataset=dataset, 
                          age_range=age_range,
                          seed=seed, 
                          num_workers=num_workers, 
-                         batch_size=batch_size)
+                         batch_size=batch_size,
+                         *args,
+                         **kwargs)
         assert 1 <= k <= folds, "incorrect fold number"
 
         self.k = k

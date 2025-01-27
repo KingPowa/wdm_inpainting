@@ -103,7 +103,7 @@ def create_model_and_diffusion(
     bottleneck_attention,
     resample_2d,
     additive_skips,
-    use_conditional_model,
+    use_conditional_model
 ):
     model = create_model(
         image_size,
@@ -221,7 +221,6 @@ def create_model(
     )
 
 def create_gaussian_diffusion(
-    *,
     steps=None,
     learn_sigma=False,
     sigma_small=False,
@@ -232,6 +231,8 @@ def create_gaussian_diffusion(
     rescale_learned_sigmas=False,
     timestep_respacing="",
     mode='default',
+    *args,
+    **kwargs
 ):
     betas = get_named_beta_schedule(noise_schedule, steps)
     if use_kl:
@@ -259,5 +260,5 @@ def create_gaussian_diffusion(
         ),
         loss_type=loss_type,
         rescale_timesteps=rescale_timesteps,
-        mode=mode,
+        mode=mode
     )

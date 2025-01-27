@@ -76,6 +76,16 @@ class Cropper:
 
         # Apply the slices to crop the image
         return img[tuple(slices)]
+    
+class QuantileAndNormalize:
+
+    def __call__(self, img: np.ndarray) -> np.ndarray:
+        normalize=(lambda x: 2*x - 1)
+        out_clipped = np.clip(img, np.quantile(img, 0.001), np.quantile(img, 0.999))
+        out_normalized = (out_clipped - np.min(out_clipped)) / (np.max(out_clipped) - np.min(out_clipped))
+        out_normalized= normalize(out_normalized)
+        #img = convert_to_tensor(out_normalized, track_meta=False)
+        return out_normalized
 
 class WDMAdapter:
 
