@@ -9,11 +9,11 @@ import sys
 import torch as th
 import datetime
 from omegaconf import OmegaConf
-from ..utils.custom_dl import prepare_dataloader
 
 sys.path.append(".")
 sys.path.append("..")
 
+from utils.custom_dl import prepare_dataloader
 from guided_diffusion import (dist_util,
                               logger)
 from guided_diffusion.c_bratsloader import c_BraTSVolumes

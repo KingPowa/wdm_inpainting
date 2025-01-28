@@ -12,11 +12,15 @@ import pathlib
 import random
 import sys
 import torch as th
+from omegaconf import OmegaConf
 from scipy.stats import linregress
+from PIL import Image
+import matplotlib.pyplot as plt
 
 sys.path.append(".")
-sys.path.insert(1, '/projects/brats2023_a_f/BraTS2024_cluster/8_InPainting/src')   
-from guided_diffusion.c_bratsloader import c_BraTSVolumes
+sys.path.append("..")
+
+from utils.custom_dl import prepare_dataloader_val, get_original_images
 from guided_diffusion import (dist_util,
                               logger)
 from guided_diffusion.script_util import (model_and_diffusion_defaults,
@@ -119,23 +123,16 @@ def main():
 
     if args.use_fp16:
         raise ValueError("fp16 currently not implemented")
+
+    CONFIG_PATH = args.config_file
+    # Load configuration
+    config = OmegaConf.load(CONFIG_PATH)
     
     model.eval()
     idwt = IDWT_3D("haar")
     dwt = DWT_3D('haar')
     if args.use_label_cond:
-        datal, ds = c_BraTSVolumes(directory=args.data_dir, 
-                            batch_size=args.batch_size,
-                            num_workers=int(args.num_workers), 
-                            mode=args.mode,
-                            img_size=args.image_size,
-                            use_label_cond=args.use_label_cond,
-                            use_label_cond_dilated=args.use_label_cond_dilated,
-                            data_split_json=args.data_split_json,
-                            validation=args.validation,
-                            train_mode=args.train_mode,
-                            beg_case=args.beg_case,
-                            end_case=args.end_case).get_dl_ds()
+        datal = prepare_dataloader_val(config)
 
         iterator_data = iter(datal)
 
@@ -168,10 +165,8 @@ def main():
                 # Get real case to inpaint
                 t1n_voided = batch["t1n_voided"].to(dist_util.dev())
 
-                #t1n_voided = t1n * (1-label_cond)
-
-                file_name = batch["t1n_voided_meta_dict"]["filename_or_obj"][0].split("/")[-2]
-
+                indices = batch["index"]
+                t1n_original = get_original_images(datal.original_dataset, indices)
 
                 # Create input with noise in region of interest
                 noise = th.randn(args.batch_size, 1, args.image_size, args.image_size, args.image_size).to(dist_util.dev()) * label_cond
@@ -249,25 +244,12 @@ def main():
                         sample[:, 6, :, :, :].view(B, 1, D, H, W),
                         sample[:, 7, :, :, :].view(B, 1, D, H, W))
 
-            # Getting metadata
-            target_t1n_voided_path = os.path.join("/projects/brats2023_a_f/BraTS2024_cluster/data/ASNR-MICCAI-BraTS2023-Local-Synthesis-Challenge-Training", file_name, f"{file_name}-t1n-voided.nii.gz")
-            if not os.path.exists(target_t1n_voided_path):
-                target_t1n_voided_path = os.path.join("/projects/brats2023_a_f/BraTS2024_cluster/data/ASNR-MICCAI-BraTS2023-Local-Synthesis-Challenge-Validation", file_name, f"{file_name}-t1n-voided.nii.gz")
-            
-            target_t1n_voided_data = nib.load(target_t1n_voided_path).get_fdata()
-            affine, header = get_affine(scan_path=target_t1n_voided_path)
-
             # The new correction of intensity starts here #########################
             #########################
             # We need the label used for the prediction, so we don't use these voxels
 
             sample = (sample + 1) / 2. # the sample intensity will range [0,1]
             t1n_voided = (t1n_voided + 1) / 2 # variable with the real data (used as input of the model for prediction) with intensity ranging [0,1]
-
-            t1n_voided_dilated = t1n_voided * (1-label_cond) # getting all real values, outside of the conditional label # full_res_label_cond_dilated_th before TODO
-            sample_dilated = sample * (1-label_cond) # getting all sampled values, outside of the conditional label # full_res_label_cond_dilated_th before TODO
-
-            non_zero_mask = ((1-label_cond)[0][0].cpu().numpy() != 0)  # full_res_label_cond_dilated_th before TODO
 
             roi = sample*label_cond # Region predicted
 
@@ -293,69 +275,74 @@ def main():
             # Setting folder to save files
             pathlib.Path(args.output_dir).mkdir(parents=True, exist_ok=True)
             
-            output_name = os.path.join(args.output_dir, f'{file_name}-t1n-inference.nii.gz')
-            final_prediction = rescale_array_numpy(arr=final_prediction, mask=label_cond, minv=target_t1n_voided_data.min(), maxv=target_t1n_voided_data.max()) 
-            final_prediction = crop_to_240_240_155(tensor=final_prediction)
+            output_name = os.path.join(args.output_dir, f'img_{indices[0]}-t1n-inference.png')
+            final_prediction = rescale_array_numpy(arr=final_prediction, mask=label_cond, minv=t1n_original.min(), maxv=t1n_original.max()) 
+            # final_prediction = crop_to_240_240_155(tensor=final_prediction)
             final_prediction = np.flip(np.flip(final_prediction, axis=0), axis=1)
-            img = nib.Nifti1Image(final_prediction, affine=affine, header=header)
-            nib.save(img=img, filename=output_name)
+            print(final_prediction.shape)
+            # img = Image.fromarray(final_prediction)
+            # img.save(filename=output_name)
+            plt.imsave(output_name, final_prediction[:,:,32], cmap='gray', format='png')
             print(f'Saved to {output_name}')
 
-            output_name = os.path.join(args.output_dir, f'{file_name}-sample.nii.gz')
-            sample = crop_to_240_240_155(tensor=sample)
+            output_name = os.path.join(args.output_dir, f'img_{indices[0]}-sample.png')
+            # sample = crop_to_240_240_155(tensor=sample)
             sample = np.flip(np.flip(sample, axis=0), axis=1)
-            img = nib.Nifti1Image(sample, affine=affine, header=header)
-            nib.save(img=img, filename=output_name)
+            # img = Image.fromarray(sample)
+            # img.save(filename=output_name)
+            plt.imsave(output_name, sample[:,:,32], cmap='gray', format='png')
             print(f'Saved to {output_name}')
 
-            output_name = os.path.join(args.output_dir, f'{file_name}-sample-roi.nii.gz')
-            roi = crop_to_240_240_155(tensor=roi)
+            output_name = os.path.join(args.output_dir, f'img_{indices[0]}-sample-roi.png')
+            # roi = crop_to_240_240_155(tensor=roi)
             roi = np.flip(np.flip(roi, axis=0), axis=1)
-            img = nib.Nifti1Image(roi, affine=affine, header=header)
-            nib.save(img=img, filename=output_name)
+            # img = Image.fromarray(roi)
+            # img.save(filename=output_name)
+            plt.imsave(output_name, roi[:,:,32], cmap='gray', format='png')
             print(f'Saved to {output_name}')
 
-            output_name = os.path.join(args.output_dir, f'{file_name}_label.nii.gz')
-            label_cond = crop_to_240_240_155(tensor=label_cond)
+            output_name = os.path.join(args.output_dir, f'img_{indices[0]}_label.png')
+            # label_cond = crop_to_240_240_155(tensor=label_cond)
             label_cond = np.flip(np.flip(label_cond, axis=0), axis=1)
-            label_cond = nib.Nifti1Image(label_cond, affine=affine, header=header)
-            nib.save(img=label_cond, filename=output_name)
+            # img = Image.fromarray(label_cond)
+            # img.save(filename=output_name)
+            plt.imsave(output_name, label_cond[:,:,32], cmap='gray', format='png')
             print(f'Saved to {output_name}')
 
         except Exception as e:
-            print("An error occurred:", e)
+            print("An error occurred:", str(e), str(e.with_traceback()))
             print("INFERENCE FINISHED")
             break
             
-    def copy_files_with_suffix(source_folder, destination_folder, suffix):
-        # Create the destination folder if it doesn't exist
-        if not os.path.exists(destination_folder):
-            os.makedirs(destination_folder)
-            print(f"Created directory: {destination_folder}")
-        else:
-            print(f"Directory already exists: {destination_folder}")
+    # def copy_files_with_suffix(source_folder, destination_folder, suffix):
+    #     # Create the destination folder if it doesn't exist
+    #     if not os.path.exists(destination_folder):
+    #         os.makedirs(destination_folder)
+    #         print(f"Created directory: {destination_folder}")
+    #     else:
+    #         print(f"Directory already exists: {destination_folder}")
 
-        copied_files = []
+    #     copied_files = []
 
-        # Iterate over all files in the source folder
-        for filename in os.listdir(source_folder):
-            # Check if the file ends with the specified suffix
-            if filename.endswith(suffix):
-                source_file = os.path.join(source_folder, filename)
-                destination_file = os.path.join(destination_folder, filename)
-                # Copy the file to the destination folder
-                shutil.copy2(source_file, destination_file)
-                print(f"Copied: {source_file} to {destination_file}")
-                copied_files.append(filename)
-        # Zip all copied files
-        zip_filename = os.path.join(destination_folder, f"{args.output_dir.split('/')[-1]}_submit.zip")
-        with zipfile.ZipFile(zip_filename, 'w') as zipf:
-            for file in copied_files:
-                zipf.write(os.path.join(destination_folder, file), file)
-        print(f"Zipped all copied files to: {zip_filename}")
+    #     # Iterate over all files in the source folder
+    #     for filename in os.listdir(source_folder):
+    #         # Check if the file ends with the specified suffix
+    #         if filename.endswith(suffix):
+    #             source_file = os.path.join(source_folder, filename)
+    #             destination_file = os.path.join(destination_folder, filename)
+    #             # Copy the file to the destination folder
+    #             shutil.copy2(source_file, destination_file)
+    #             print(f"Copied: {source_file} to {destination_file}")
+    #             copied_files.append(filename)
+    #     # Zip all copied files
+    #     zip_filename = os.path.join(destination_folder, f"{args.output_dir.split('/')[-1]}_submit.zip")
+    #     with zipfile.ZipFile(zip_filename, 'w') as zipf:
+    #         for file in copied_files:
+    #             zipf.write(os.path.join(destination_folder, file), file)
+    #     print(f"Zipped all copied files to: {zip_filename}")
 
-    destination_folder = os.path.join(args.output_dir, f"{args.output_dir.split('/')[-1]}_submit")
-    copy_files_with_suffix(source_folder=args.output_dir, destination_folder=destination_folder, suffix='t1n-inference.nii.gz')
+    # destination_folder = os.path.join(args.output_dir, f"{args.output_dir.split('/')[-1]}_submit")
+    # copy_files_with_suffix(source_folder=args.output_dir, destination_folder=destination_folder, suffix='t1n-inference.png')
 
 
 
@@ -387,13 +374,20 @@ def create_argparser():
         train_mode=None,
         beg_case=0,
         end_case="end",
-        steps_scheduler=None
+        steps_scheduler=None,
+        config_file= None
     )
     defaults.update({k:v for k, v in model_and_diffusion_defaults().items() if k not in defaults})
     parser = argparse.ArgumentParser()
     add_dict_to_argparser(parser, defaults)
     return parser
 
-
 if __name__ == "__main__":
+
+    import debugpy
+    print("Waiting for debugger attach")
+    debugpy.wait_for_client()
+    debugpy.breakpoint()
+    print('break on this line')
+
     main()

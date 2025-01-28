@@ -162,3 +162,5 @@ cython_debug/
 #.idea/
 
 train/*
+*.pth
+*.pt

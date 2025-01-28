@@ -3,7 +3,7 @@
 SEED=42;                  # randomness seed for sampling
 CHANNELS=64;              # number of model base channels (we use 64 for all experiments)
 IN_CHANNELS=8;            # Number of channels in the input (8 after the wavelet transform)
-MODE='c_train';             # c_train vs c_sample
+MODE='c_sample';             # c_train vs c_sample
 TRAIN_MODE=Conditional_always_known_only_healthy; 
 # Default (for the pre-training); 
 # Conditional_always_known (for the conditional where the remaining volume does not have noise); 
@@ -15,11 +15,11 @@ DATASET='c_brats';          # c_brats
 MODEL='ours_unet_64';    # 'ours_unet_256', 'ours_wnet_128', 'ours_wnet_256'
 
 # settings for sampling/inference
-ITERATIONS=3000;             # training iteration (as a multiple of 1k) checkpoint to use for sampling
-SAMPLING_STEPS=5000;         # number of steps for accelerated sampling, 0 for the default TODO: 1000
+ITERATIONS="030";             # training iteration (as a multiple of 1k) checkpoint to use for sampling
+SAMPLING_STEPS=1000;         # number of steps for accelerated sampling, 0 for the default TODO: 1000
 NOISE_SCHEDULE=linear;       # linear(original) or cosine
 STEPS_SCHEDULER=None; # None for default linear without changes, DPM_plus_plus_2M_Karras or cosine
-RUN_DIR="runs/Conditional_always_known_only_healthy_31_7_2024_12:35:11";               # tensorboard dir to be set for the evaluation
+RUN_DIR="runs/Conditional_always_known_only_healthy_27_1_2025_17:34:53";               # tensorboard dir to be set for the evaluation
 
 # TRAIN
 DATA_DIR=../../DataSet/ASNR-MICCAI-BraTS2023-Local-Synthesis-Challenge-Training;
@@ -205,6 +205,7 @@ COMMON="
 --use_label_cond=${USE_LABEL_COND}
 --use_label_cond_dilated=${USE_LABEL_COND_DILATED}
 --use_conditional_model=${USE_CONDITIONAL_MODEL}
+--config_file=/mnt/d/Programmazione/Progetti/phd/wdm_inpainting/train/wdmc.yaml
 "
 
 TRAIN="
@@ -241,9 +242,14 @@ SAMPLE="
 --output_dir=${OUTPUT_DIR}
 "
 
+cd /mnt/d/Programmazione/Progetti/phd/wdm_inpainting/Task8/wdm-3d
+source /home/kingpowa/miniconda3/etc/profile.d/conda.sh
+conda activate torch_env
+
 # run the python scripts
 if [[ $MODE == 'c_train' ]]; then
   python scripts/c_generation_train.py $TRAIN $COMMON;
 else
-  python scripts/c_generation_sample.py $SAMPLE $COMMON;
+  python -m debugpy --listen 5678 --wait-for-client scripts/c_generation_sample.py $SAMPLE $COMMON;
+  # python scripts/c_generation_sample.py $SAMPLE $COMMON;
 fi

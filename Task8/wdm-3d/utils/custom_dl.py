@@ -370,6 +370,47 @@ class MedicalDataset(Dataset):
     @property
     def modality(self):
         return self.config.modality
+    
+class CombinedMedicalDataset(MedicalDataset):
+
+    def __init__(self, datasets: List[MedicalDataset]):
+        self.datasets = datasets
+        self.concat_dataset = ConcatDataset(datasets)
+
+    def __getitem__(self, index: int) -> tuple[np.ndarray, float, str]:
+        dataset_idx, sample_idx = self._get_dataset_and_index(index)
+        return self.datasets[dataset_idx][sample_idx]
+
+    def __len__(self):
+        return len(self.concat_dataset)
+
+    def _get_dataset_and_index(self, index: int):
+        """ Helper function to map global index to corresponding dataset and local index. """
+        current_len = 0
+        for i, dataset in enumerate(self.datasets):
+            if index < current_len + len(dataset):
+                return i, index - current_len
+            current_len += len(dataset)
+        raise IndexError("Index out of range")
+
+    def get_sample(self, index: int):
+        """ Retrieves a sample using the dataset-specific get_sample() method. """
+        dataset_idx, sample_idx = self._get_dataset_and_index(index)
+        return self.datasets[dataset_idx].get_sample(sample_idx)
+
+    def get_name(self):
+        """ Combines the names of all datasets. """
+        return "_".join([ds.get_name() for ds in self.datasets])
+
+    def get_location(self):
+        """ Returns locations of all datasets. """
+        return [ds.get_location() for ds in self.datasets]
+
+    @property
+    def modality(self):
+        """ Assumes all datasets share the same modality or returns a list if they differ. """
+        modalities = list(set(ds.modality for ds in self.datasets))
+        return modalities[0] if len(modalities) == 1 else modalities
 
 # Custom Dataset for loading data from a generic LMDB file
 class LMDBDataset(MedicalDataset):
@@ -636,7 +677,7 @@ class MRIDataset(Dataset):
 
         self.age_range = None
         
-        self.dataset = dataset if not is_iterable(dataset, cls=MedicalDataset) else ConcatDataset(dataset)
+        self.dataset = dataset if not is_iterable(dataset, cls=MedicalDataset) else CombinedMedicalDataset(dataset)
         self.length = len(self.dataset)
         self.mtransforms = tr.Compose(transforms) if transforms else torch.nn.Identity()
 
@@ -702,10 +743,30 @@ class MRIMaskedDataset(MRIDataset):
             "t1n": image.unsqueeze(0),
             "mask_healthy": 1-mask,  # If enabled
             "mask_unhealthy": mask,  # If enabled
-            "meta_dict": {}  # Dictionary containing metadata for each image
+            "index": index // self.mask_sampler.config.per_sample
         }
 
         return btch
+    
+class MRIMaskedDatasetVal(Dataset):
+
+    def __init__(self, 
+                 dataset: MRIMaskedDataset):
+        self.dataset = dataset
+
+    def __len__(self):
+        return len(self.dataset)
+
+    def __getitem__(self, index: int) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        btch = self.dataset[index]
+
+        new_btch = {
+            "mask": btch["mask_unhealthy"],
+            "t1n_voided": btch["t1n"] * (1-btch["mask_unhealthy"]),
+            "index": btch["index"]
+        }
+
+        return new_btch
     
 from torch.utils.data import DataLoader
 from torch.nn import Module
@@ -723,13 +784,42 @@ class MRIInpaintDataLoader(DataLoader):
                  batch_size: int = 16,
                  transforms : list[Module] = None):
         # Now explicitly call the parent constructor with all parameters
-        super(MRIInpaintDataLoader, self).__init__()
 
         ds = MRIMaskedDataset(dataset, age_range, mask_sampler=mask_sampler, 
                                               transforms=transforms)
-        DataLoader(ds, num_workers=num_workers, batch_size=batch_size,
-                          shuffle=True, generator=Generator().manual_seed(seed))
+        super(MRIInpaintDataLoader, self).__init__(
+            dataset=ds,
+            num_workers=num_workers,
+            batch_size=batch_size,
+            shuffle=True
+        )
+
+class MRIInpaintDataLoaderVal(DataLoader):
+    
+    def __init__(self,
+                 dataset: MedicalDataset | Collection[MedicalDataset],
+                 age_range: Iterable[float],
+                 mask_sampler: MaskSampler,
+                 seed: int = 11111,
+                 num_workers: int = 15,
+                 batch_size: int = 16,
+                 transforms : list[Module] = None):
+        # Now explicitly call the parent constructor with all parameters
+
         
+
+        ds_m = MRIMaskedDataset(dataset, age_range, mask_sampler=mask_sampler, 
+                                              transforms=transforms)
+        ds = MRIMaskedDatasetVal(ds_m)
+        super(MRIInpaintDataLoaderVal, self).__init__(
+            dataset=ds,
+            num_workers=num_workers,
+            batch_size=batch_size,
+            shuffle=True
+        )
+
+        self.original_dataset = ds_m
+
 from omegaconf import ListConfig, DictConfig
 from logging import Logger
 import hydra
@@ -752,7 +842,7 @@ def instantiate_datasets(datasets: ListConfig[DictConfig], logger: Logger = None
 def prepare_dataloader(config):
 
     datasets = instantiate_datasets(config.datasets)
-    mask_sampler = DirectorySampler(PresampledMaskConfig("/Users/kingpowa/Documents/Programming/masks"))
+    mask_sampler = DirectorySampler(PresampledMaskConfig("/mnt/d/Programmazione/Progetti/phd/masks"))
 
     IMG_SHAPE = [config.model_config.image_size]*3
     dataloader = MRIInpaintDataLoader(dataset=datasets[0:], 
@@ -764,3 +854,27 @@ def prepare_dataloader(config):
                                                 "mask": [Resize3D(IMG_SHAPE, "trilinear"), MaskTransform()]}) 
     
     return dataloader
+
+def prepare_dataloader_val(config):
+
+    datasets = instantiate_datasets(config.datasets)
+    mask_sampler = DirectorySampler(PresampledMaskConfig("/mnt/d/Programmazione/Progetti/phd/masks"))
+
+    IMG_SHAPE = [config.model_config.image_size]*3
+    dataloader = MRIInpaintDataLoaderVal(dataset=datasets[0:], 
+                                    age_range=None,
+                                    batch_size=config.train_config.batch_size,
+                                    mask_sampler=mask_sampler,
+                                    num_workers=config.train_config.num_workers,
+                                    transforms={"img": [Resize3D(IMG_SHAPE, "trilinear")], 
+                                                "mask": [Resize3D(IMG_SHAPE, "trilinear"), MaskTransform()]}) 
+    
+    return dataloader
+
+def get_original_images(ds: MRIMaskedDataset, indices) -> np.ndarray:
+    image_batch = []
+    for index in indices:
+        img, _, _ = ds.dataset.get_sample(index)
+        image_batch.append(img)
+
+    return np.concatenate(image_batch, axis=0)
